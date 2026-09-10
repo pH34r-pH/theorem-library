@@ -4,13 +4,13 @@ set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 export LEAN_NUM_THREADS=1
 
-lake build DomainScaling
-lake env leanchecker DomainScaling
+lake build TheoremLibrary
+lake env leanchecker TheoremLibrary
 
 # Scan project Lean sources, including untracked files, but not dependencies.
 # Deliberately reject placeholder words even in comments. grep errors fail closed.
 shopt -s globstar nullglob
-sources=(DomainScaling.lean DomainScaling/**/*.lean)
+sources=(TheoremLibrary.lean DomainScaling/**/*.lean)
 if grep -nEw 'sorry|admit' "${sources[@]}"; then
   echo 'Placeholder audit failed: remove sorry/admit from project Lean sources.' >&2
   exit 1
@@ -20,7 +20,7 @@ else
 fi
 echo 'Placeholder audit passed.'
 
-# Same tool revision, root, and permitted axioms as lean-action@v1's audit.
+# Same tool revision and permitted axioms as lean-action@v1's audit.
 # Retain the tool build under .lake for subsequent local validation runs.
 audit_ref=v0.1.2
 audit_sha=46024e005996495c65ef609368e11ab39c4222e3
@@ -43,4 +43,4 @@ if ! cmp -s lean-toolchain "$audit_dir/lean-toolchain"; then
 fi
 (cd "$audit_dir" && lake build)
 lake env "$audit_dir/.lake/build/bin/axiom-audit" \
-  --root DomainScaling --allow propext,Classical.choice,Quot.sound
+  --root TheoremLibrary --allow propext,Classical.choice,Quot.sound
