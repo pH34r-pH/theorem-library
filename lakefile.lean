@@ -9,4 +9,6 @@ require mathlib from git
   "58e016c6f6c829b5f25b1a87a88f495f40e70aa7"
 
 @[default_target]
-lean_lib TheoremLibrary
+lean_lib TheoremLibrary where
+  roots := #[`TheoremLibrary]
+  globs := #[Glob.one `TheoremLibrary, Glob.submodules `DomainScaling.Geometry.Sphere]
