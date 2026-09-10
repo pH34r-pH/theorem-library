@@ -43,4 +43,4 @@ if ! cmp -s lean-toolchain "$audit_dir/lean-toolchain"; then
 fi
 (cd "$audit_dir" && lake build)
 lake env "$audit_dir/.lake/build/bin/axiom-audit" \
-  --root TheoremLibrary --allow propext,Classical.choice,Quot.sound
+  --root DomainScaling --allow propext,Classical.choice,Quot.sound
