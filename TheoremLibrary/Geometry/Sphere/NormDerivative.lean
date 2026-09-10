@@ -11,7 +11,7 @@ Ontology links:
 This isolates the scalar-calculus step used by normalization.
 -/
 
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 
 open scoped RealInnerProductSpace
 
@@ -44,4 +44,4 @@ theorem hasFDerivAt_norm_of_norm_eq_one
   have h := hasFDerivAt_norm_of_ne_zero u hu
   simpa [hunit] using h
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere

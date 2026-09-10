@@ -1,5 +1,5 @@
-import DomainScaling.Geometry.Sphere.NormalizationSpectrum
-import DomainScaling.Geometry.Sphere.ScaleInvariantLoss
+import TheoremLibrary.Geometry.Sphere.NormalizationSpectrum
+import TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss
 import Mathlib.Analysis.Calculus.Gradient.Basic
 
 /-! FRM-000149: actual Riesz gradient of a normalized loss, radial orthogonality,
@@ -7,7 +7,7 @@ finite-step norm identity and derivative-at-zero angular learning rate.
 Completeness and differentiability are explicit; no optimizer is inferred from
 an arbitrary covector and no generalization claim is made. -/
 
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
 
 /-- Riesz gradient chain rule for an actual scale-invariant loss. The normalization
@@ -76,4 +76,4 @@ theorem normalized_gradient_step_norm_sq (ell : E → ℝ) (x : E) (hx : x ≠ 0
       ‖x‖ ^ 2 + eta ^ 2 * ‖gradient (fun z : E => ell ((1 / ‖z‖) • z)) x‖ ^ 2 :=
   tangent_step_norm_sq x _ eta (normalized_loss_gradient_orthogonal ell x hx hell)
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere

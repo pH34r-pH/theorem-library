@@ -13,7 +13,7 @@ claim that this projector is the Fréchet derivative of normalization; that is a
 separate formal obligation.
 -/
 
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 
 open scoped BigOperators
 
@@ -39,4 +39,4 @@ theorem tangentProject_tangent {n : ℕ} (u v : Fin n → ℝ)
   funext i
   simp [tangentProject, horth]
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere

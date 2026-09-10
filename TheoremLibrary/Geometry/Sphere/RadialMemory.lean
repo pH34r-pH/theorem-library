@@ -1,10 +1,10 @@
-import DomainScaling.Geometry.Sphere.Anisotropy
+import TheoremLibrary.Geometry.Sphere.Anisotropy
 import Mathlib.Logic.Function.Iterate
 
 /-! Positive-scale orbit quotient and exact proposal-boundary radial memory loss.
 FRM-000023, reserved by campaign #257; LIB-SPH-001/005.
 An upstream proposal may encode previous radius into angle; that is not erased here. -/
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
 noncomputable def normalizeState (x : E) : E := (1 / ‖x‖) • x
@@ -80,4 +80,4 @@ theorem downstream_radial_annihilation (x : E) (hx : x ≠ 0) (a : ℝ)
     A (fderiv ℝ (fun y : E => (1 / ‖y‖) • y) x (a • x)) = 0 := by
   rw [fderiv_normalization_radial_line x hx, map_zero]
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere

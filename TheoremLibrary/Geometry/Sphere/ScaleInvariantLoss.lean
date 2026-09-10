@@ -1,4 +1,4 @@
-import DomainScaling.Geometry.Sphere.Anisotropy
+import TheoremLibrary.Geometry.Sphere.Anisotropy
 import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Comp
 import Mathlib.Analysis.Calculus.Deriv.Mul
@@ -6,7 +6,7 @@ import Mathlib.Tactic.Ring
 
 /-! FRM-000021 / LIB-SPH-003: exact radial flatness, finite tangent-step norm
 identity and derivative-at-zero angular scaling. -/
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 open scoped RealInnerProductSpace
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
@@ -80,4 +80,4 @@ theorem norm_angular_velocity_scaled (x gu : E) (hx : x ≠ 0)
   rw [(hasDerivAt_normalized_scaled_tangent_step x gu hx horth).deriv,
     norm_smul, Real.norm_eq_abs, abs_neg, abs_of_nonneg (one_div_nonneg.mpr (sq_nonneg ‖x‖))]
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere

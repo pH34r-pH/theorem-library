@@ -1,9 +1,9 @@
-import DomainScaling.Geometry.Sphere.Anisotropy
+import TheoremLibrary.Geometry.Sphere.Anisotropy
 import Mathlib.Analysis.InnerProductSpace.SingularValues
 
 /-! FRM-000133: the actual normalization derivative's kernel, rank and singular values. -/
 
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 open scoped RealInnerProductSpace
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
@@ -107,4 +107,4 @@ theorem normalization_derivative_rank (x : E) (hx : x ≠ 0) :
   rw [normalization_derivative_ker x hx,finrank_span_singleton hx] at h
   exact h
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere

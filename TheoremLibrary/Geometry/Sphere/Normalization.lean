@@ -1,4 +1,4 @@
-import DomainScaling.Geometry.Sphere.NormDerivative
+import TheoremLibrary.Geometry.Sphere.NormDerivative
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Calculus.FDeriv.Mul
 
@@ -18,7 +18,7 @@ This module is an explicit formal-CI target: changes here must pass kernel build
 leanchecker, and axiom audit before any ontology status promotion.
 -/
 
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 
 open scoped RealInnerProductSpace
 
@@ -170,4 +170,4 @@ theorem fderiv_normalization_apply_tangent
   change fderiv ℝ (fun y : E => ‖y‖⁻¹ • y) x = _ at hderiv
   simpa only [one_div, hderiv] using normalization_derivative_apply_tangent x v horth
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere

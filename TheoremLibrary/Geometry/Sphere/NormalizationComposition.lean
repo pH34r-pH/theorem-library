@@ -1,9 +1,9 @@
-import DomainScaling.Geometry.Sphere.NormalizationSpectrum
+import TheoremLibrary.Geometry.Sphere.NormalizationSpectrum
 
 /-! FRM-000149: exact pre/post/sandwich derivative kernels, nonlinear chain rules,
 arbitrary tangent gain, and a concrete affine-producer radial-survival boundary. -/
 
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 
 variable {E F G : Type*}
   [NormedAddCommGroup E] [InnerProductSpace ℝ E]
@@ -122,4 +122,4 @@ theorem two_dimensional_post_normalization_counterexample :
   obtain ⟨f, hfu, hf, hs⟩ := affine_producer_radial_survival u hu u v hun huv hvn
   exact ⟨u, f, hu, hfu, hf, hs⟩
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere

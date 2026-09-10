@@ -1,10 +1,10 @@
-import DomainScaling.Geometry.Sphere.Normalization
+import TheoremLibrary.Geometry.Sphere.Normalization
 import Mathlib.Tactic.Linarith
 
 /-! FRM-000020 / LIB-SPH-002: exact normalization derivative and its two-channel norm action.
 This module reuses the checked calculus and adds no singular-value machinery. -/
 
-namespace DomainScaling.Geometry.Sphere
+namespace TheoremLibrary.Geometry.Sphere
 open scoped RealInnerProductSpace
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
@@ -62,4 +62,4 @@ theorem normalization_derivative_no_common_gain (x v : E) (hx : x ≠ 0)
   rw [hg0, zero_mul] at hgv
   linarith
 
-end DomainScaling.Geometry.Sphere
+end TheoremLibrary.Geometry.Sphere
