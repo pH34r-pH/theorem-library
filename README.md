@@ -22,6 +22,20 @@ The private research repository remains authoritative for:
 
 A compiling Lean theorem proves the encoded mathematical statement under its assumptions. It does **not** by itself prove that an informal scientific claim was encoded faithfully or that its assumptions hold empirically.
 
+## Namespace boundary
+
+Reusable public mathematics is defined under `TheoremLibrary.*`. Research-specific private formalization remains under `DomainScaling.*` in the consuming research repository.
+
+```text
+Mathlib
+  ↓
+TheoremLibrary.*   public reusable mathematics
+  ↓
+DomainScaling.*    private research-specific formalization
+```
+
+Stable `FRM-*` / `LIB-*` identifiers preserve theorem identity independently of module/declaration refactors.
+
 ## Current PUBLIC-CORE
 
 The initial public slice concentrates on reusable hypersphere-normalization mathematics that already supports the public educational research thread:
@@ -40,12 +54,12 @@ The `FRM-*` / `LIB-*` labels are stable cross-repository addresses where availab
 ## Layout
 
 ```text
-DomainScaling/       reusable Lean theorem modules
-TheoremLibrary.lean  public library import surface
-scripts/             bootstrap and validation infrastructure
-lakefile.lean        Lake project definition
-lake-manifest.json   pinned dependency manifest
-lean-toolchain       pinned Lean toolchain
+TheoremLibrary/       reusable public Lean theorem modules
+TheoremLibrary.lean   public library import surface
+scripts/              bootstrap and validation infrastructure
+lakefile.lean         Lake project definition
+lake-manifest.json    pinned dependency manifest
+lean-toolchain        pinned Lean toolchain
 ```
 
 ## Development
