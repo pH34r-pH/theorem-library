@@ -1,11 +1,12 @@
 import Lake
+
 open Lake DSL
 
-package «domain-scaling» where
-  version := v!"0.1.0"
+package DomainScaling
 
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4.git" @ "v4.34.0-rc2"
+  "https://github.com/leanprover-community/mathlib4.git" @
+  "58e016c6f6c829b5f25b1a87a88f495f40e70aa7"
 
 @[default_target]
 lean_lib DomainScaling
