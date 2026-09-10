@@ -22,11 +22,26 @@ The private research repository remains authoritative for:
 
 A compiling Lean theorem proves the encoded mathematical statement under its assumptions. It does **not** by itself prove that an informal scientific claim was encoded faithfully or that its assumptions hold empirically.
 
+## Current PUBLIC-CORE
+
+The initial public slice concentrates on reusable hypersphere-normalization mathematics that already supports the public educational research thread:
+
+- tangent projection identities;
+- norm and normalization derivatives;
+- exact radial/tangent derivative anisotropy (`LIB-SPH-002` / `FRM-000020`);
+- scale-invariant loss and normalized-step identities (`LIB-SPH-003` / `FRM-000021`);
+- positive-scale quotient and radial-memory boundaries (`LIB-SPH-001/005` / `FRM-000023`);
+- normalization kernel, range, rank, and singular-value structure (`FRM-000133`);
+- pre/post-normalization composition boundaries (`FRM-000149`);
+- normalized-loss gradient identities (`FRM-000149`).
+
+The `FRM-*` / `LIB-*` labels are stable cross-repository addresses where available. Their scientific lifecycle/status remains owned by the private theorem ledger; this repository does not duplicate it.
+
 ## Layout
 
 ```text
-DomainScaling/       reusable Lean mathematics
-DomainScaling.lean   public library import surface
+DomainScaling/       reusable Lean theorem modules
+TheoremLibrary.lean  public library import surface
 scripts/             bootstrap and validation infrastructure
 lakefile.lean        Lake project definition
 lake-manifest.json   pinned dependency manifest
@@ -37,17 +52,17 @@ lean-toolchain       pinned Lean toolchain
 
 ```bash
 bash scripts/bootstrap_mathlib.sh
-lake build DomainScaling
+lake build TheoremLibrary
 bash scripts/dev_check.sh
 bash scripts/validate_formal.sh
 ```
 
-The library intentionally uses stable declaration/ontology identifiers in theorem documentation where available. Those identifiers permit the private theorem ledger and public educational notes to refer to the same formal object without duplicating ledger state here.
+The public validation stack performs an ordinary Lean build, independent `leanchecker` validation, a project-source placeholder audit, and a pinned axiom audit. Passing those checks establishes an intrinsic fact about this encoded proof library; it is not a substitute for scientific correspondence review in the private research program.
 
 ## Consumers
 
-- `domain-scaling-lab` — private empirical research integration and authoritative theorem ledger.
-- `research-notes` — public educational explanations and links to selected formal checkpoints.
+- `domain-scaling-lab` — private empirical research integration and authoritative theorem ledger; it consumes a pinned theorem-library commit.
+- [`research-notes`](https://github.com/pH34r-pH/research-notes) — public educational explanations and links to selected formal checkpoints.
 
 ## Disclosure classes
 
@@ -55,4 +70,4 @@ The library intentionally uses stable declaration/ontology identifiers in theore
 
 **INFRASTRUCTURE:** build/bootstrap/checking machinery required to independently verify PUBLIC-CORE.
 
-Experiment-specific formal extensions may remain private until they are appropriate for public release.
+Experiment-specific formal extensions and theorem-ledger context may remain private until they are appropriate for public release.
