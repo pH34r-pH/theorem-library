@@ -54,19 +54,4 @@ jobs:
         run: lake build TheoremLibrary
 
       - name: Independently validate compiled proofs
-        uses: leanprover/lean-action@v1
-        with:
-          auto-config: false
-          build: false
-          test: false
-          lint: false
-          use-mathlib-cache: false
-          use-github-cache: false
-          leanchecker: true
-          leanchecker-args: "TheoremLibrary"
-          nanoda: false
-          axiom-audit: true
-          # The package/build target is TheoremLibrary, but the migrated declarations
-          # intentionally retain their stable DomainScaling.* namespaces.
-          axiom-audit-root: DomainScaling
-          axiom-audit-allow: propext,Classical.choice,Quot.sound
+        run: bash scripts/validate_formal.sh
