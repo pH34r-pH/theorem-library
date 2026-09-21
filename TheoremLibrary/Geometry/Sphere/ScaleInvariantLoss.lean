@@ -4,8 +4,20 @@ import Mathlib.Analysis.Calculus.Deriv.Comp
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Tactic.Ring
 
-/-! FRM-000021 / LIB-SPH-003: exact radial flatness, finite tangent-step norm
-identity and derivative-at-zero angular scaling. -/
+/-!
+# Scale-invariant losses and normalized tangent updates
+
+This module derives exact first-order consequences of composing a differentiable
+loss with vector normalization. It proves radial flatness of the composed loss,
+orthogonality of a representing gradient, and exact identities for tangent
+updates and their normalized angular velocity.
+
+The results describe the stated differential and update constructions. They do
+not imply that an arbitrary optimizer follows those dynamics or establish any
+generalization or task-performance claim.
+
+Stable references: LIB-SPH-003 / FRM-000021.
+-/
 namespace TheoremLibrary.Geometry.Sphere
 open scoped RealInnerProductSpace
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
