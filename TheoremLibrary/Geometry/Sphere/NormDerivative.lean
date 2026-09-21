@@ -4,11 +4,14 @@ import Mathlib.Analysis.SpecialFunctions.Sqrt
 /-!
 # Derivative of the norm away from zero
 
-Ontology links:
-- FRM-000003: checked unit-vector specialization
-- FRM-000001: broader normalization-derivative target
+This module isolates the scalar-calculus step needed to differentiate vector
+normalization. In a real inner-product space, it proves the Fréchet derivative
+of the norm at every nonzero point and records the simpler unit-vector case.
 
-This isolates the scalar-calculus step used by normalization.
+The zero vector is intentionally excluded because the norm is not differentiable
+there in the form required by the normalization results.
+
+Stable references: FRM-000003 and supporting work for FRM-000001.
 -/
 
 namespace TheoremLibrary.Geometry.Sphere
