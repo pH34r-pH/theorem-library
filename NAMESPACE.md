@@ -1,19 +1,15 @@
-# Namespace boundary
+# Namespace convention
 
-Reusable public formal mathematics is defined under `TheoremLibrary.*`.
+Reusable mathematics in this repository lives under `TheoremLibrary.*`.
 
-The private research program may import this package from `domain-scaling-lab`, but research-specific formalization remains under `DomainScaling.*`. Stable `FRM-*` and `LIB-*` identifiers preserve theorem identity across module/declaration refactors.
-
-This distinction is intentional:
+The namespace is intended for results that can stand independently of a particular experiment: their statements should be mathematical, their assumptions explicit, and their usefulness broader than one run or dataset. Research-specific formalizations can import this package without moving experiment names, empirical assumptions, or research-state machinery into the reusable library.
 
 ```text
 Mathlib
   ↓
-TheoremLibrary.*   public reusable mathematics
+TheoremLibrary.*   reusable public mathematics
   ↓
-DomainScaling.*    private research-specific formalization
-  ↓
-private theorem ledger / ontology / empirical program
+research-specific formalization and applications
 ```
 
-A successful public proof build establishes only the encoded mathematical statement. Scientific correspondence, empirical assumptions, and research-program promotion remain outside this repository.
+Stable `FRM-*` and `LIB-*` identifiers may be attached to public results when the same mathematical object is referenced elsewhere in the research. The identifier provides continuity across module or declaration refactors; the Lean declaration remains the machine-checkable statement.
