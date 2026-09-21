@@ -1,7 +1,20 @@
 import TheoremLibrary.Geometry.Sphere.NormalizationSpectrum
 
-/-! FRM-000149: exact pre/post/sandwich derivative kernels, nonlinear chain rules,
-arbitrary tangent gain, and a concrete affine-producer radial-survival boundary. -/
+/-!
+# Normalization under composition
+
+Local radial annihilation does not automatically extend to an arbitrary network.
+This module characterizes normalization before and after surrounding maps,
+including exact derivative kernels, nonlinear chain rules, tangent gain, and an
+affine-producer counterexample where an input-radial perturbation survives after
+the producer rotates it into an output-tangent direction.
+
+The results provide composition boundaries for interpreting normalization: what
+is killed depends on where normalization appears and how surrounding computation
+transforms the perturbation.
+
+Stable result family: FRM-000149.
+-/
 
 namespace TheoremLibrary.Geometry.Sphere
 
