@@ -1,68 +1,54 @@
 # Theorem Library
 
-Public, machine-checkable mathematical foundations for the Domain Scaling research program.
+Theorem Library contains machine-checkable mathematical results that emerged from my research into neural representations and computation. The current public collection focuses on normalization and hyperspherical geometry: what normalization preserves, what it removes, how its derivative behaves, and which of those local properties survive composition with other operations.
 
-This repository contains the **PUBLIC-CORE** Lean theorem library and the **INFRASTRUCTURE** needed to build and validate it. It is deliberately not the research program's theorem ledger.
+The proofs are written in Lean and build against a pinned Lean/Mathlib environment. They are intended to make the mathematical parts of the research independently inspectable without requiring the surrounding experiments or research infrastructure.
 
-## Authority boundary
+## Current results
 
-This repository is authoritative for intrinsic formal facts such as:
+The public library currently includes proofs covering:
 
-- the Lean source of a public theorem;
-- whether a declaration exists at a particular commit;
-- whether that commit builds under the pinned Lean/mathlib toolchain;
-- whether the public proof-validation checks pass.
+- the derivative of vector normalization;
+- exact radial and tangent behavior under that derivative;
+- its kernel, range, rank, and singular values;
+- consequences for scale-invariant losses and gradients;
+- what information positive rescaling loses at a normalization boundary;
+- where radial/tangent conclusions do and don't survive composition with surrounding computation.
 
-The private research repository remains authoritative for:
+These results support the normalization and hypersphere thread in my [Research Notes](https://github.com/pH34r-pH/research-notes), where I explain why each result mattered to the experiments and what stronger conclusions it doesn't justify.
 
-- theorem-ledger lifecycle state and scientific acceptance;
-- correspondence between formal statements and informal research claims;
-- empirical assumptions and interpretation boundaries;
-- experiment dependencies and active research provenance.
+See [INDEX.md](INDEX.md) for a human-readable map from stable theorem identifiers to plain-language statements and Lean source.
 
-A compiling Lean theorem proves the encoded mathematical statement under its assumptions. It does **not** by itself prove that an informal scientific claim was encoded faithfully or that its assumptions hold empirically.
+## How the pieces fit together
 
-## Namespace boundary
+The Lean modules form a small dependency chain rather than a collection of unrelated theorem files:
 
-Reusable public mathematics is defined under `TheoremLibrary.*`. Research-specific private formalization remains under `DomainScaling.*` in the consuming research repository.
+`norm derivative → normalization derivative → radial/tangent geometry → spectral/composition/gradient consequences`
 
-```text
-Mathlib
-  ↓
-TheoremLibrary.*   public reusable mathematics
-  ↓
-DomainScaling.*    private research-specific formalization
-```
+The [PUBLIC-CORE inventory](PUBLIC_CORE.md) lists the currently exported modules, while the source under `TheoremLibrary/` contains the proofs themselves.
 
-Stable `FRM-*` / `LIB-*` identifiers preserve theorem identity independently of module/declaration refactors.
+Stable `LIB-*` and `FRM-*` identifiers are used where a result also appears elsewhere in the research, so the same theorem can be referenced even if its Lean module is later reorganized.
 
-## Current PUBLIC-CORE
-
-The initial public slice concentrates on reusable hypersphere-normalization mathematics that already supports the public educational research thread:
-
-- tangent projection identities;
-- norm and normalization derivatives;
-- exact radial/tangent derivative anisotropy (`LIB-SPH-002` / `FRM-000020`);
-- scale-invariant loss and normalized-step identities (`LIB-SPH-003` / `FRM-000021`);
-- positive-scale quotient and radial-memory boundaries (`LIB-SPH-001/005` / `FRM-000023`);
-- normalization kernel, range, rank, and singular-value structure (`FRM-000133`);
-- pre/post-normalization composition boundaries (`FRM-000149`);
-- normalized-loss gradient identities (`FRM-000149`).
-
-The `FRM-*` / `LIB-*` labels are stable cross-repository addresses where available. Their scientific lifecycle/status remains owned by the private theorem ledger; this repository does not duplicate it.
-
-## Layout
+## Repository structure
 
 ```text
-TheoremLibrary/       reusable public Lean theorem modules
-TheoremLibrary.lean   public library import surface
-scripts/              bootstrap and validation infrastructure
+TheoremLibrary/       reusable Lean theorem modules
+TheoremLibrary.lean   library import surface
+INDEX.md              human-readable theorem index
+PUBLIC_CORE.md        exported-module inventory
+scripts/              bootstrap and validation tools
 lakefile.lean         Lake project definition
-lake-manifest.json    pinned dependency manifest
+lake-manifest.json    pinned dependencies
 lean-toolchain        pinned Lean toolchain
 ```
 
-## Development
+Reusable public mathematics lives under the `TheoremLibrary.*` namespace. [NAMESPACE.md](NAMESPACE.md) documents the namespace boundary for contributors.
+
+## Verification
+
+The repository pins its Lean and Mathlib dependencies and validates the public library through an ordinary Lean build plus independent proof and source checks.
+
+To build it locally:
 
 ```bash
 bash scripts/bootstrap_mathlib.sh
@@ -71,17 +57,4 @@ bash scripts/dev_check.sh
 bash scripts/validate_formal.sh
 ```
 
-The public validation stack performs an ordinary Lean build, independent `leanchecker` validation, a project-source placeholder audit, and a pinned axiom audit. Passing those checks establishes an intrinsic fact about this encoded proof library; it is not a substitute for scientific correspondence review in the private research program.
-
-## Consumers
-
-- `domain-scaling-lab` — private empirical research integration and authoritative theorem ledger; it consumes a pinned theorem-library commit.
-- [`research-notes`](https://github.com/pH34r-pH/research-notes) — public educational explanations and links to selected formal checkpoints.
-
-## Disclosure classes
-
-**PUBLIC-CORE:** reusable mathematical results whose disclosure does not expose a sensitive active empirical frontier.
-
-**INFRASTRUCTURE:** build/bootstrap/checking machinery required to independently verify PUBLIC-CORE.
-
-Experiment-specific formal extensions and theorem-ledger context may remain private until they are appropriate for public release.
+A successful build establishes that the encoded mathematical statements follow from their stated assumptions in the pinned formal environment. Whether a theorem's assumptions describe a particular trained model is a separate scientific question; those connections are discussed in the Research Notes rather than encoded into the theorem itself.
