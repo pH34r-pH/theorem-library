@@ -2,10 +2,20 @@ import TheoremLibrary.Geometry.Sphere.NormalizationSpectrum
 import TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss
 import Mathlib.Analysis.Calculus.Gradient.Basic
 
-/-! FRM-000149: actual Riesz gradient of a normalized loss, radial orthogonality,
-finite-step norm identity and derivative-at-zero angular learning rate.
-Completeness and differentiability are explicit; no optimizer is inferred from
-an arbitrary covector and no generalization claim is made. -/
+/-!
+# Gradients of losses composed with normalization
+
+This module derives the Riesz gradient of a differentiable loss composed with
+vector normalization. It proves radial orthogonality of that gradient, an exact
+finite-step norm identity, and the derivative-at-zero angular velocity for the
+corresponding Euclidean gradient step.
+
+These are statements about the specified normalized loss and gradient update.
+They do not infer the behavior of a different optimizer or establish a
+performance or generalization result.
+
+Stable result family: FRM-000149.
+-/
 
 namespace TheoremLibrary.Geometry.Sphere
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
