@@ -1,9 +1,21 @@
 import TheoremLibrary.Geometry.Sphere.Anisotropy
 import Mathlib.Logic.Function.Iterate
 
-/-! Positive-scale orbit quotient and exact proposal-boundary radial memory loss.
-FRM-000023, reserved by campaign #257; LIB-SPH-001/005.
-An upstream proposal may encode previous radius into angle; that is not erased here. -/
+/-!
+# Positive-scale equivalence and radial-memory boundaries
+
+This module makes precise one kind of information erased by normalization.
+Positive rescalings of the same nonzero proposal normalize to the same state,
+so deterministic downstream computation that receives only that normalized
+state cannot recover which positive scale produced it.
+
+The boundary is important: upstream computation may encode information formerly
+carried by radius into direction before normalization. These theorems therefore
+do not claim that every piece of radial information must disappear from a
+complete recurrent system.
+
+Stable references: LIB-SPH-001/005 / FRM-000023.
+-/
 namespace TheoremLibrary.Geometry.Sphere
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
