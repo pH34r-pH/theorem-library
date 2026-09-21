@@ -1,7 +1,20 @@
 import TheoremLibrary.Geometry.Sphere.Anisotropy
 import Mathlib.Analysis.InnerProductSpace.SingularValues
 
-/-! FRM-000133: the actual normalization derivative's kernel, rank and singular values. -/
+/-!
+# Spectrum of the normalization derivative
+
+This module upgrades the radial/tangent description of normalization into exact
+linear-algebraic statements. In finite-dimensional real inner-product spaces it
+characterizes the derivative's kernel, range, rank, and singular values: one
+radial zero mode and equal inverse-radius gain on tangent modes.
+
+This is the spectrum of one local derivative. It does not determine the
+singular structure of a product of Jacobians across recurrent steps, where the
+relevant directions can rotate between updates.
+
+Stable reference: FRM-000133.
+-/
 
 namespace TheoremLibrary.Geometry.Sphere
 open scoped RealInnerProductSpace
