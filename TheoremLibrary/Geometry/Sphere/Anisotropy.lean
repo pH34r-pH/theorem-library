@@ -1,8 +1,20 @@
 import TheoremLibrary.Geometry.Sphere.Normalization
 import Mathlib.Tactic.Linarith
 
-/-! FRM-000020 / LIB-SPH-002: exact normalization derivative and its two-channel norm action.
-This module reuses the checked calculus and adds no singular-value machinery. -/
+/-!
+# Radial and tangent behavior of normalization
+
+This module characterizes the first-order anisotropy of vector normalization.
+For a nonzero state `x`, the derivative of `x ↦ x / ‖x‖` annihilates the
+radial direction and scales tangent directions by `1 / ‖x‖`. At unit radius,
+tangent perturbations are therefore preserved to first order.
+
+The result is local and geometric. It does not assign semantic meaning to
+radial or tangent directions, and it does not determine the behavior of a
+multi-step nonlinear recurrence.
+
+Stable references: LIB-SPH-002 / FRM-000020.
+-/
 
 namespace TheoremLibrary.Geometry.Sphere
 open scoped RealInnerProductSpace
