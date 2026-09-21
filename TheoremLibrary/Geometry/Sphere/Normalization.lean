@@ -3,19 +3,21 @@ import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Calculus.FDeriv.Mul
 
 /-!
-# Derivative of unit normalization
+# Derivative of vector normalization
 
-Ontology links:
-- FRM-000001: broader nonzero normalization derivative target
-- FRM-000004: reciprocal-norm derivative intermediate
-- FRM-000005: unit-point normalization derivative
-- FRM-000006: general radial annihilation by the normalization derivative
-- FRM-000007: general tangent scaling by the normalization derivative
+This module proves the Fréchet derivative of `x ↦ x / ‖x‖` at every nonzero
+state. The derivative is the inverse-radius-scaled tangent projector
+`(1 / ‖x‖)(I - uuᵀ)`, where `u = x / ‖x‖`.
 
-The calculus proof is separated from the continuous-linear-map normalization
-identity so coercion/notation issues cannot obscure the differentiability result.
-This module is an explicit formal-CI target: changes here must pass kernel build,
-leanchecker, and axiom audit before any ontology status promotion.
+It also proves the two directional consequences used throughout the public
+library: radial perturbations are annihilated, while tangent perturbations are
+scaled by exactly the inverse radius.
+
+These are local first-order statements about normalization itself. They do not
+assign task meaning to radial or tangent directions and do not determine the
+behavior of a surrounding nonlinear recurrence.
+
+Stable references: FRM-000001 and FRM-000004 through FRM-000007.
 -/
 
 namespace TheoremLibrary.Geometry.Sphere
