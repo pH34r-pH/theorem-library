@@ -1,34 +1,29 @@
-# PUBLIC-CORE inventory
+# Public module inventory
 
-The current public core is deliberately narrower than the complete private formal campaign. It contains reusable hypersphere-normalization mathematics whose disclosure does not expose the active experimental frontier.
+The public library currently covers one connected mathematical thread: vector normalization and its consequences. The modules progress from elementary projection identities through the normalization derivative, then into anisotropy, spectral structure, scale-invariant losses, radial-memory boundaries, composition, and gradients.
 
-## Included modules
+## Modules
 
-- `TheoremLibrary.Geometry.Sphere.Projection`
-- `TheoremLibrary.Geometry.Sphere.NormDerivative`
-- `TheoremLibrary.Geometry.Sphere.Normalization`
-- `TheoremLibrary.Geometry.Sphere.Anisotropy`
-- `TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss`
-- `TheoremLibrary.Geometry.Sphere.RadialMemory`
-- `TheoremLibrary.Geometry.Sphere.NormalizationSpectrum`
-- `TheoremLibrary.Geometry.Sphere.NormalizationComposition`
-- `TheoremLibrary.Geometry.Sphere.NormalizationGradient`
+- `TheoremLibrary.Geometry.Sphere.Projection` — radial/tangent projection identities on a unit direction.
+- `TheoremLibrary.Geometry.Sphere.NormDerivative` — Fréchet derivative of the norm away from zero.
+- `TheoremLibrary.Geometry.Sphere.Normalization` — derivative of vector normalization and its radial/tangent action.
+- `TheoremLibrary.Geometry.Sphere.Anisotropy` — exact separation between radial and tangent first-order gain.
+- `TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss` — consequences of normalization for differentiable losses and tangent updates.
+- `TheoremLibrary.Geometry.Sphere.RadialMemory` — positive-scale equivalence and the information boundary created by normalization.
+- `TheoremLibrary.Geometry.Sphere.NormalizationSpectrum` — kernel, range, rank, and singular values of the normalization derivative.
+- `TheoremLibrary.Geometry.Sphere.NormalizationComposition` — what radial/tangent conclusions survive composition with surrounding computation.
+- `TheoremLibrary.Geometry.Sphere.NormalizationGradient` — exact gradients and update identities for losses composed with normalization.
 
-All reusable public declarations live under `TheoremLibrary.*`. Stable `FRM-*` / `LIB-*` identifiers preserve cross-repository theorem identity independently of module paths.
+See [INDEX.md](INDEX.md) for plain-language theorem descriptions, stable identifiers, and links into the Research Notes.
 
-## Included infrastructure
+## Verification infrastructure
 
-- pinned Lean and Mathlib versions;
-- reproducible Lake manifest;
-- selective Mathlib cache bootstrap;
-- incremental development build helper;
-- independent `leanchecker` validation;
-- source placeholder audit;
-- pinned axiom audit;
-- GitHub Actions validation workflow.
+The repository includes the pinned Lean/Mathlib environment and the scripts required to build and independently validate these modules:
 
-## Not included
+- `lake-manifest.json` and `lean-toolchain` pin the formal environment;
+- `scripts/bootstrap_mathlib.sh` prepares the required Mathlib cache;
+- `scripts/dev_check.sh` provides the normal development check;
+- `scripts/validate_formal.sh` performs the additional proof/source validation used by CI;
+- `.github/workflows/lean.yml` runs validation on GitHub Actions.
 
-The private theorem ledger, ontology/provenance graph, experiment-specific correspondence, clean-room promotion receipts, active conjecture queue, and formal modules whose release would reveal unpublished research strategy remain in `domain-scaling-lab` under the research-specific `DomainScaling.*` namespace.
-
-The boundary can expand milestone by milestone. Moving a theorem here changes where its public proof source lives; it does not transfer ownership of scientific lifecycle state out of the private ledger.
+The public module set can grow as additional reusable results become stable enough to stand independently of the experiments that produced them.
