@@ -2,15 +2,16 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Real.Basic
 
 /-!
-# Hypersphere tangent projection
+# Tangent projection on the unit sphere
 
-Ontology links:
-- FRM-000001: broader derivative-of-normalization target (not fully discharged here)
-- FRM-000002: algebraic radial/tangent projector identities proved below
+This module establishes the elementary projection identities used by the later
+normalization results. For a unit direction `u`, the tangent projector removes
+the radial component parallel to `u` and fixes vectors orthogonal to `u`.
 
-This file deliberately proves the projection algebra first. It does not yet
-claim that this projector is the Fréchet derivative of normalization; that is a
-separate formal obligation.
+These are algebraic projection facts; identifying this projector with the
+Fréchet derivative of normalization is proved separately in `Normalization.lean`.
+
+Stable reference: FRM-000002.
 -/
 
 namespace TheoremLibrary.Geometry.Sphere
