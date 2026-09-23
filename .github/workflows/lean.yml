@@ -3,16 +3,9 @@ name: lean
 on:
   push:
     branches: [main]
-    paths:
-      - "DomainScaling/**"
-      - "TheoremLibrary.lean"
-      - "lakefile.lean"
-      - "lake-manifest.json"
-      - "lean-toolchain"
-      - "scripts/**"
-      - ".github/workflows/lean.yml"
   pull_request:
     paths:
+      - "TheoremLibrary/**"
       - "DomainScaling/**"
       - "TheoremLibrary.lean"
       - "lakefile.lean"
@@ -21,6 +14,9 @@ on:
       - "scripts/**"
       - ".github/workflows/lean.yml"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: lean-${{ github.workflow }}-${{ github.ref }}
