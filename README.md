@@ -44,6 +44,14 @@ lean-toolchain        pinned Lean toolchain
 
 Reusable public mathematics lives under the `TheoremLibrary.*` namespace. [NAMESPACE.md](NAMESPACE.md) documents the namespace boundary for contributors.
 
+## Fleet source qualification
+
+Private Fleet selects a full 40-character theorem-library commit SHA on the trusted `main` history. The source checkout at that SHA is the publication input: `TheoremLibrary/**`, `TheoremLibrary.lean`, `lakefile.lean`, `lean-toolchain`, `lake-manifest.json` and validation/bootstrap scripts. Fleet pins the checkout and hashes the exact used bytes alongside Portfolio and other research source SHAs in its private publication receipt.
+
+The public `lean` workflow's stable required job is `formal-proof`. It now runs for **every main push**, including docs-only commits, and on proof-affecting PR changes. It uses a GitHub-hosted runner with `contents: read`, the pinned Lean/Mathlib inputs, `scripts/bootstrap_mathlib.sh`, `lake build TheoremLibrary`, and `scripts/validate_formal.sh`. Fleet requires a completed successful **main push** run and that named job on the same exact source SHA. A missing, skipped, pending, canceled, failed or PR-only run cannot qualify a candidate. Manual dispatch remains a diagnostic/retry path but does not replace the exact-main gate.
+
+A successful formal build proves the encoded statements under their stated formal assumptions. It says nothing by itself about empirical models. Fleet #177 owns automatic intake, additional source pins and final artifact digest; protected Azure publication stays in private Fleet.
+
 ## Verification
 
 The repository pins its Lean and Mathlib dependencies and validates the public library through an ordinary Lean build plus independent proof and source checks.
