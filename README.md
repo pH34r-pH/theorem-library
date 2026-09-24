@@ -52,6 +52,10 @@ The public `lean` workflow's stable required job is `formal-proof`. It now runs 
 
 A successful formal build proves the encoded statements under their stated formal assumptions. It says nothing by itself about empirical models. Fleet #177 owns automatic intake, additional source pins and final artifact digest; protected Azure publication stays in private Fleet.
 
+
+
+For Fleet's current polling cadence, operator retry path, receipt location, and deployment boundary, see the [Fleet workflow and deployed-surface map](https://github.com/pH34r-pH/long-haul-fleet/blob/main/docs/workflow-and-surface-map.md).
+
 ## Verification
 
 The repository pins its Lean and Mathlib dependencies and validates the public library through an ordinary Lean build plus independent proof and source checks.
