@@ -1,0 +1,26 @@
+{
+  "schemaVersion":1,
+  "repository":"pH34r-pH/theorem-library",
+  "manifests":[
+    {"path":"lean-toolchain","kind":"toolchain"},
+    {"path":"lakefile.lean","kind":"build"},
+    {"path":"lake-manifest.json","kind":"lock"},
+    {"path":".github/workflows/lean.yml","kind":"workflow"},
+    {"path":"scripts/bootstrap_mathlib.sh","kind":"build"},
+    {"path":"scripts/validate_formal.sh","kind":"build"}
+  ],
+  "profiles":{
+    "formal-proof":{
+      "phases":["build","test"],
+      "platforms":[{"os":"linux","arch":"amd64","abi":"glibc"}],
+      "tools":{
+        "lean":{"sources":["lean-toolchain",".github/workflows/lean.yml"]},
+        "lake":{"sources":["lean-toolchain","lakefile.lean","lake-manifest.json"]},
+        "bash":{"sources":["scripts/bootstrap_mathlib.sh","scripts/validate_formal.sh"]},
+        "git":{"sources":["lake-manifest.json",".github/workflows/lean.yml"]}
+      },
+      "entrypoints":["bash scripts/bootstrap_mathlib.sh","lake build TheoremLibrary","bash scripts/validate_formal.sh"],
+      "notes":"Native Lean/Lake files select versions. Preserve the bounded Mathlib cache closure and independent compiled-proof validation; package presence is not a proof result."
+    }
+  }
+}
