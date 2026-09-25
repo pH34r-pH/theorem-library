@@ -5,6 +5,8 @@ on:
     branches: [main]
   pull_request:
     paths:
+      - ".fleet/**"
+      - ".github/workflows/requirements.yml"
       - "TheoremLibrary/**"
       - "DomainScaling/**"
       - "TheoremLibrary.lean"
