@@ -3,6 +3,10 @@
 [![Lean](https://github.com/pH34r-pH/theorem-library/actions/workflows/lean.yml/badge.svg)](https://github.com/pH34r-pH/theorem-library/actions/workflows/lean.yml)
 [![License](https://img.shields.io/github/license/pH34r-pH/theorem-library)](LICENSE)
 
+<p align="center">
+  <img src="docs/assets/hero.webp" alt="Theorem Library — formal mathematics and reusable theorem graph" width="100%">
+</p>
+
 **Machine-checkable mathematics extracted from an empirical research program.**
 
 Theorem Library contains reusable Lean results that emerged while studying neural representations and computation. The current public core focuses on normalization and hyperspherical geometry: what normalization preserves, what it removes, the exact structure of its derivative, and which local conclusions survive composition with surrounding computation.
