@@ -6,11 +6,13 @@ export LEAN_NUM_THREADS=1
 
 lake build TheoremLibrary
 lake env leanchecker TheoremLibrary
+python scripts/validate_mutation_fixture_report.py
+lake env lean Mutate.lean
 
 # Scan project Lean sources, including untracked files, but not dependencies.
 # Deliberately reject placeholder words even in comments. grep errors fail closed.
 shopt -s globstar nullglob
-sources=(TheoremLibrary.lean TheoremLibrary/**/*.lean)
+sources=(Mutate.lean TheoremLibrary.lean TheoremLibrary/**/*.lean)
 if grep -nEw 'sorry|admit' "${sources[@]}"; then
   echo 'Placeholder audit failed: remove sorry/admit from project Lean sources.' >&2
   exit 1
