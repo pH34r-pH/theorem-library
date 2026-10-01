@@ -3,7 +3,11 @@
     "command": "lake env lean --run /path/to/Mutate.lean/Mutate.lean --include-def projectionFixture --ops lit Mutate.lean",
     "coverageMeasured": false,
     "fixture": "Mutate.lean",
+    "capturedByDeveloper": true,
+    "beforeStrengtheningRunRecorded": false,
+    "mutationTarget": "projectionFixture's artificial zero coefficient; not production tangentProject",
     "productionDefinition": "TheoremLibrary.Geometry.Sphere.tangentProject",
+    "reproducedInCi": false,
     "runnerCommit": "b8a4d402cd1cf605aaac8a5494a6eea604d406c3",
     "runnerRepository": "https://github.com/jubnzv/Mutate.lean",
     "runnerLicense": "unresolved; not vendored",
@@ -20,15 +24,16 @@
           ],
           "location": {
             "end": {
-              "column": 66,
+              "column": 26,
               "line": 45
             },
             "start": {
-              "column": 3,
+              "column": 25,
               "line": 45
             }
           },
           "mutatorName": "lit",
+          "original": "0",
           "replacement": "1",
           "status": "Killed",
           "statusReason": "Upstream Mutate.lean output: projectionFixture  1  killed  projection_fixture_mixed_additivity; killed=1 survived=0 stillborn=0"

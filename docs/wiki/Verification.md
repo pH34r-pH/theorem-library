@@ -47,12 +47,20 @@ lake env lean --run "$MUTATE_LEAN" --include-def tangentProject \
 
 The observed upstream result is `killed=1 survived=0 stillborn=0`, with
 `projection_fixture_mixed_additivity` identifying the strengthened invariant.
+That captured mutation targets only the fixture wrapper's artificial zero
+coefficient; it does not mutate production `tangentProject`. No before-
+strengthening survivor run was recorded, so this is not a before/after mutation
+score or a general theorem about mixed directions.
 Running the actual production definition separately gave `killed=2
 survived=0 stillborn=2`, with `tangentProject_radial` identified for the
 killed mutations. The captured machine-readable report is
 `reports/mutation-upstream-fixture.json`; it records the upstream commit and
 command. It intentionally omits coverage fields because the upstream tool
-does not measure test coverage for this run.
+does not measure test coverage for this run. Formal validation also checks that
+the report's source-derived mutation range is in bounds and extracts the
+declared original token. The upstream execution was developer-captured; CI
+checks the Lean fixture and report integrity but does not install or rerun the
+unlicensed upstream tool.
 The remaining blocker is upstream usage rights, not Lean compatibility.
 
 ## CI qualification

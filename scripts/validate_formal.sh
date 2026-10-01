@@ -6,6 +6,7 @@ export LEAN_NUM_THREADS=1
 
 lake build TheoremLibrary
 lake env leanchecker TheoremLibrary
+python scripts/validate_mutation_fixture_report.py
 lake env lean Mutate.lean
 
 # Scan project Lean sources, including untracked files, but not dependencies.
