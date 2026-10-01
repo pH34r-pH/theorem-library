@@ -9,7 +9,7 @@ These pages are the canonical source copied by [`../../.github/workflows/wiki-sy
 - `Verification.md` and `Publication-and-Provenance.md` document exact-source qualification and evidence limits.
 - `Contributing-Proofs.md` is the contribution route; `_Sidebar.md` is wiki navigation.
 
-Keep links checkable and summaries tied to repository source. The existing Lean workflow and wiki-sync workflow remain formal/publication integrations; `documentation-hygiene.yml` is the single changed-Markdown/artifact guard.
+Keep links checkable and summaries tied to repository source. The existing Lean workflow and wiki-sync workflow remain formal/publication integrations; `lean.yml` contains the single changed-Markdown/artifact guard.
 
 ```sh
 git diff --check

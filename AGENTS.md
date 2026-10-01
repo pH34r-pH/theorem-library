@@ -48,4 +48,4 @@ bash scripts/validate_formal.sh
 python scripts/test_docs_hygiene.py
 ```
 
-The existing formal CI source is [`.github/workflows/lean.yml`](.github/workflows/lean.yml), and [`.github/workflows/documentation-hygiene.yml`](.github/workflows/documentation-hygiene.yml) is the single changed-Markdown/artifact guard. Do not add another guard while Fleet #1032, DSL #586, and Portfolio #84 are under coherence review.
+The existing formal CI source is [`.github/workflows/lean.yml`](.github/workflows/lean.yml), which also contains the single changed-Markdown/artifact guard because this repository has no separate structural-audit workflow. Do not add another guard while Fleet #1032, DSL #586, and Portfolio #84 are under coherence review.
