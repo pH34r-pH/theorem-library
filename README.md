@@ -77,6 +77,8 @@ Read the [Wiki](https://github.com/pH34r-pH/theorem-library/wiki) for the theore
 - `scripts/` — bootstrap and independent validation.
 - `lakefile.lean`, `lake-manifest.json`, `lean-toolchain` — pinned environment.
 
+Scoped maintainer maps and focused validation commands live in [`AGENTS.md`](AGENTS.md) and the directory-level maps linked there.
+
 ## Contributing and citation
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) and [NAMESPACE.md](NAMESPACE.md) before proposing exported mathematics. Research use can cite [CITATION.cff](CITATION.cff) plus the stable theorem identifier/declaration used.
