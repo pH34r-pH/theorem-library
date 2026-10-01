@@ -18,40 +18,42 @@ This checks the exported library and its dependencies.
 
 The bootstrap/dev/formal scripts add repository-specific checks around source layout, exported declarations, and the intended public-core contract.
 
-## Bounded mutation specification baseline
+## Bounded mutation specification fixture
 
-`Mutate.lean` is a small repository-local harness, not an upstream project or
-an independently released mutation-testing framework. It is versioned with
-Theorem Library and is covered by this repository's Apache-2.0 license. The
-harness uses the pinned Lean toolchain (`leanprover/lean4:v4.34.0-rc2`) and the
-Mathlib revision pinned in `lakefile.lean`; Lean elaboration and the kernel are
-the final proof verifier.
+`Mutate.lean` is a small repository-local Lean fixture, covered by this
+repository's Apache-2.0 license. It imports the production
+`tangentProject` directly and proves radial, tangent, and mixed-direction
+properties; it does not duplicate or replace the library definition.
 
-The runner exercises two concrete projection properties, then records a
-survivor classification and checks a mixed-direction counterexample. It emits
-`reports/mutation-baseline.json` using Mutation Testing Elements report
-`schemaVersion` 2, compatible with the pinned `mutation-testing-report-schema`
-3.9.0 source from the Stryker Mutation Testing Elements project
-([Apache-2.0](https://github.com/stryker-mutator/mutation-testing-elements)).
-The runner is only a bounded adapter around Lean and that report contract; it
-does not introduce a replacement mutation framework or make a mutation score
-gate a mathematical claim.
+The intended external runner is [jubnzv/Mutate.lean](https://github.com/jubnzv/Mutate.lean),
+whose README requires Lean `>=4.28`, compatible with this repository's pinned
+`leanprover/lean4:v4.34.0-rc2`. The tested upstream commit is
+`b8a4d402cd1cf605aaac8a5494a6eea604d406c3` (2026-09-11). Its compiler-backed
+classification distinguishes `killed`, `survived`, and `stillborn`; failed
+elaboration is not treated as a proposition being false.
 
-Run locally with:
+The upstream repository currently has no tracked `LICENSE` file, no declared
+SPDX license in GitHub metadata, and no release/tag. Therefore this repository
+does not vendor it, download it in CI, or claim issue #11 complete. A local
+checkout can be tested with:
 
 ```sh
-bash scripts/mutation_baseline.sh --write
-bash scripts/mutation_baseline.sh --check
+MUTATE_LEAN=/path/to/Mutate.lean/Mutate.lean
+lake env lean --run "$MUTATE_LEAN" --include-def projectionFixture --ops lit Mutate.lean
+lake env lean --run "$MUTATE_LEAN" --include-def tangentProject \
+  --no-ops lit,ident,flip,args,body \
+  TheoremLibrary/Geometry/Sphere/Projection.lean
 ```
 
-The committed report intentionally retains both killed and survived examples:
-the `specification-gap` survivor passes the radial/tangent baseline but fails
-the kernel-checked mixed-direction additivity property, while the
-`equivalent-noise` survivor is propositionally equivalent to the baseline.
-These are specification-feedback categories for this finite witness suite,
-not claims about arbitrary recurrences or trained models. Plausible/LSpec are
-not required by this bounded deterministic baseline; generated examples remain
-a future extension rather than silently trusted evidence.
+The observed upstream result is `killed=1 survived=0 stillborn=0`, with
+`projection_fixture_mixed_additivity` identifying the strengthened invariant.
+Running the actual production definition separately gave `killed=2
+survived=0 stillborn=2`, with `tangentProject_radial` identified for the
+killed mutations. The captured machine-readable report is
+`reports/mutation-upstream-fixture.json`; it records the upstream commit and
+command. It intentionally omits coverage fields because the upstream tool
+does not measure test coverage for this run.
+The remaining blocker is upstream usage rights, not Lean compatibility.
 
 ## CI qualification
 

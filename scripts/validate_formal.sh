@@ -6,7 +6,7 @@ export LEAN_NUM_THREADS=1
 
 lake build TheoremLibrary
 lake env leanchecker TheoremLibrary
-bash scripts/mutation_baseline.sh --check
+lake env lean Mutate.lean
 
 # Scan project Lean sources, including untracked files, but not dependencies.
 # Deliberately reject placeholder words even in comments. grep errors fail closed.

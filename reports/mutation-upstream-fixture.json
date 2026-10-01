@@ -1,0 +1,67 @@
+{
+  "config": {
+    "command": "lake env lean --run /path/to/Mutate.lean/Mutate.lean --include-def projectionFixture --ops lit Mutate.lean",
+    "coverageMeasured": false,
+    "fixture": "Mutate.lean",
+    "productionDefinition": "TheoremLibrary.Geometry.Sphere.tangentProject",
+    "runnerCommit": "b8a4d402cd1cf605aaac8a5494a6eea604d406c3",
+    "runnerRepository": "https://github.com/jubnzv/Mutate.lean",
+    "runnerLicense": "unresolved; not vendored",
+    "verifier": "Lean compiler frontend and kernel via lake env lean"
+  },
+  "files": {
+    "Mutate.lean": {
+      "language": "lean",
+      "mutants": [
+        {
+          "id": "projectionFixture-lit-0-to-1",
+          "killedBy": [
+            "projection_fixture_mixed_additivity"
+          ],
+          "location": {
+            "end": {
+              "column": 66,
+              "line": 45
+            },
+            "start": {
+              "column": 3,
+              "line": 45
+            }
+          },
+          "mutatorName": "lit",
+          "replacement": "1",
+          "status": "Killed",
+          "statusReason": "Upstream Mutate.lean output: projectionFixture  1  killed  projection_fixture_mixed_additivity; killed=1 survived=0 stillborn=0"
+        }
+      ],
+      "source": "import TheoremLibrary.Geometry.Sphere.Projection\nimport Mathlib.Tactic.FinCases\nimport Mathlib.Tactic.NormNum\n\n/-!\n# Mutation-testing fixture\n\nThis file is a small, repository-local fixture for the upstream\n`jubnzv/Mutate.lean` Lean mutation-testing tool. It imports and tests the\nactual public `tangentProject`; it does not duplicate or replace that\ndefinition. The strengthened mixed-direction property is intentionally kept\nhere as specification feedback rather than added to the public theorem index.\n\nThe upstream runner remains an external developer tool until its source\nlicense is clarified. See `docs/wiki/Verification.md` for the exact\ncompatibility and licensing boundary.\n-/\n\nnamespace TheoremLibrary.MutationBaseline\n\nopen TheoremLibrary.Geometry.Sphere\n\nabbrev Vector := Fin 2 → ℝ\nabbrev Projection := Vector → Vector → Vector\n\ndef axis0 : Vector := fun i => if i = 0 then 1 else 0\n\ndef axis1 : Vector := fun i => if i = 1 then 1 else 0\n\ndef radialProperty (project : Projection) : Prop :=\n  project axis0 axis0 = 0\n\ndef tangentProperty (project : Projection) : Prop :=\n  project axis0 axis1 = axis1\n\ndef mixedAdditivityProperty (project : Projection) : Prop :=\n  project axis0 (axis0 + axis1) = project axis0 axis0 + project axis0 axis1\n\ndef mixedWitnessFactor : Vector → ℝ := fun v => v 0 * v 1\n\n/- The fixture calls the production definition directly. The zero term is a\n   deliberate mutation site: it is invisible to the radial/tangent witnesses\n   below but the mixed-direction property rejects its nonzero mutation. -/\ndef projectionFixture : Projection := fun u v =>\n  tangentProject u v + (0 : ℝ) • (mixedWitnessFactor v • v)\n\ndef gapMutation : Projection := fun u v => fun i =>\n  v i - euclideanDot u v * v i\n\nexample : radialProperty tangentProject := by\n  exact tangentProject_radial axis0 (by\n    norm_num [axis0, euclideanDot])\n\nexample : tangentProperty tangentProject := by\n  exact tangentProject_tangent axis0 axis1 (by\n    norm_num [axis0, axis1, euclideanDot])\n\ntheorem projection_fixture_radial : radialProperty projectionFixture := by\n  unfold radialProperty projectionFixture\n  funext i\n  fin_cases i <;> norm_num [axis0, mixedWitnessFactor, tangentProject, euclideanDot]\n\ntheorem projection_fixture_tangent : tangentProperty projectionFixture := by\n  unfold tangentProperty projectionFixture\n  funext i\n  fin_cases i <;> norm_num [axis0, axis1, mixedWitnessFactor, tangentProject, euclideanDot]\n\ntheorem projection_fixture_mixed_additivity : mixedAdditivityProperty projectionFixture := by\n  unfold mixedAdditivityProperty projectionFixture\n  funext i\n  fin_cases i <;> norm_num [axis0, axis1, mixedWitnessFactor, tangentProject, euclideanDot]\n\nexample : radialProperty gapMutation ∧ tangentProperty gapMutation := by\n  constructor\n  · unfold radialProperty gapMutation\n    funext i\n    fin_cases i <;> norm_num [axis0, euclideanDot]\n  · unfold tangentProperty gapMutation\n    funext i\n    fin_cases i <;> norm_num [axis0, axis1, euclideanDot]\n\nexample : ¬ mixedAdditivityProperty gapMutation := by\n  intro h\n  have h1 := congrFun h 1\n  norm_num [mixedAdditivityProperty, gapMutation, axis0, axis1, euclideanDot] at h1\n\nend TheoremLibrary.MutationBaseline\n"
+    }
+  },
+  "framework": {
+    "name": "jubnzv/Mutate.lean",
+    "version": "b8a4d402cd1cf605aaac8a5494a6eea604d406c3"
+  },
+  "schemaVersion": "2",
+  "testFiles": {
+    "Mutate.lean": {
+      "tests": [
+        {
+          "id": "projection_fixture_radial",
+          "name": "radial property"
+        },
+        {
+          "id": "projection_fixture_tangent",
+          "name": "tangent property"
+        },
+        {
+          "id": "projection_fixture_mixed_additivity",
+          "name": "mixed-direction additivity"
+        }
+      ]
+    }
+  },
+  "thresholds": {
+    "high": 100,
+    "low": 0
+  }
+}

@@ -3,23 +3,17 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 
 /-!
-# Mutation-testing baseline
+# Mutation-testing fixture
 
-This file is a deliberately small, standalone specification baseline for
-`TheoremLibrary.Geometry.Sphere.tangentProject`.  The runner mutates only the
-marked local definition, then asks Lean to elaborate the concrete property
-checks below.  A successful elaboration is a survivor; a failed elaboration is
-a killed mutant.  Lean's kernel remains the verifier for both the baseline and
-the counterexample proofs.
+This file is a small, repository-local fixture for the upstream
+`jubnzv/Mutate.lean` Lean mutation-testing tool. It imports and tests the
+actual public `tangentProject`; it does not duplicate or replace that
+definition. The strengthened mixed-direction property is intentionally kept
+here as specification feedback rather than added to the public theorem index.
 
-The two baseline properties exercise the radial and tangent channels already
-documented by the public projection module.  The strengthened mixed-direction
-property is kept separate so a survivor can be inspected as specification
-feedback rather than hidden by an unconditional mutation score.
-
-This is evidence about this small finite witness suite.  It is not a claim
-about trained models, arbitrary recurrences, or the completeness of the
-projection API.
+The upstream runner remains an external developer tool until its source
+license is clarified. See `docs/wiki/Verification.md` for the exact
+compatibility and licensing boundary.
 -/
 
 namespace TheoremLibrary.MutationBaseline
@@ -42,37 +36,39 @@ def tangentProperty (project : Projection) : Prop :=
 def mixedAdditivityProperty (project : Projection) : Prop :=
   project axis0 (axis0 + axis1) = project axis0 axis0 + project axis0 axis1
 
-def mutationTarget : Projection := fun u v => fun i =>
-  v i - euclideanDot u v * u i -- MUTATION_TARGET
+def mixedWitnessFactor : Vector → ℝ := fun v => v 0 * v 1
+
+/- The fixture calls the production definition directly. The zero term is a
+   deliberate mutation site: it is invisible to the radial/tangent witnesses
+   below but the mixed-direction property rejects its nonzero mutation. -/
+def projectionFixture : Projection := fun u v =>
+  tangentProject u v + (0 : ℝ) • (mixedWitnessFactor v • v)
 
 def gapMutation : Projection := fun u v => fun i =>
   v i - euclideanDot u v * v i
 
-def equivalentNoiseMutation : Projection := fun u v => fun i =>
-  v i - euclideanDot u v * u i + 0
+example : radialProperty tangentProject := by
+  exact tangentProject_radial axis0 (by
+    norm_num [axis0, euclideanDot])
 
--- BEGIN BASELINE TESTS
+example : tangentProperty tangentProject := by
+  exact tangentProject_tangent axis0 axis1 (by
+    norm_num [axis0, axis1, euclideanDot])
 
-example : radialProperty mutationTarget := by
-  unfold radialProperty mutationTarget
+theorem projection_fixture_radial : radialProperty projectionFixture := by
+  unfold radialProperty projectionFixture
   funext i
-  fin_cases i <;> norm_num [axis0, euclideanDot]
+  fin_cases i <;> norm_num [axis0, mixedWitnessFactor, tangentProject, euclideanDot]
 
-example : tangentProperty mutationTarget := by
-  unfold tangentProperty mutationTarget
+theorem projection_fixture_tangent : tangentProperty projectionFixture := by
+  unfold tangentProperty projectionFixture
   funext i
-  fin_cases i <;> norm_num [axis0, axis1, euclideanDot]
+  fin_cases i <;> norm_num [axis0, axis1, mixedWitnessFactor, tangentProject, euclideanDot]
 
--- END BASELINE TESTS
-
--- BEGIN STRENGTHENED PROPERTY
-
-example : mixedAdditivityProperty mutationTarget := by
-  unfold mixedAdditivityProperty mutationTarget
+theorem projection_fixture_mixed_additivity : mixedAdditivityProperty projectionFixture := by
+  unfold mixedAdditivityProperty projectionFixture
   funext i
-  fin_cases i <;> norm_num [axis0, axis1, euclideanDot]
-
--- END STRENGTHENED PROPERTY
+  fin_cases i <;> norm_num [axis0, axis1, mixedWitnessFactor, tangentProject, euclideanDot]
 
 example : radialProperty gapMutation ∧ tangentProperty gapMutation := by
   constructor
@@ -87,15 +83,5 @@ example : ¬ mixedAdditivityProperty gapMutation := by
   intro h
   have h1 := congrFun h 1
   norm_num [mixedAdditivityProperty, gapMutation, axis0, axis1, euclideanDot] at h1
-
-example : radialProperty equivalentNoiseMutation ∧
-    tangentProperty equivalentNoiseMutation := by
-  constructor
-  · unfold radialProperty equivalentNoiseMutation
-    funext i
-    fin_cases i <;> norm_num [axis0, euclideanDot]
-  · unfold tangentProperty equivalentNoiseMutation
-    funext i
-    fin_cases i <;> norm_num [axis0, axis1, euclideanDot]
 
 end TheoremLibrary.MutationBaseline
