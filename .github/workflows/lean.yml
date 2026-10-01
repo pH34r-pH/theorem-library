@@ -6,6 +6,8 @@ on:
   pull_request:
     paths:
       - "TheoremLibrary/**"
+      - "Mutate.lean"
+      - "reports/**"
       - "DomainScaling/**"
       - "TheoremLibrary.lean"
       - "lakefile.lean"

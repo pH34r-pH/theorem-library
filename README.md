@@ -42,6 +42,7 @@ bash scripts/bootstrap_mathlib.sh
 lake build TheoremLibrary
 bash scripts/dev_check.sh
 bash scripts/validate_formal.sh
+bash scripts/mutation_baseline.sh --check
 ```
 
 The repository pins Lean and Mathlib inputs through `lean-toolchain` and `lake-manifest.json`.

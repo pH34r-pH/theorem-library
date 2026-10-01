@@ -8,6 +8,7 @@ Read [`README.md`](README.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), [`INDEX.md`
 | --- | --- | --- |
 | `TheoremLibrary/` | Reusable Lean declarations under the stable `TheoremLibrary.*` namespace. | [`TheoremLibrary/AGENTS.md`](TheoremLibrary/AGENTS.md) |
 | `TheoremLibrary.lean` | Public import surface for the current core. | [`PUBLIC_CORE.md`](PUBLIC_CORE.md) |
+| `Mutate.lean` / `reports/` | Small local mutation-specification baseline and its standard machine-readable evidence. | [`docs/wiki/Verification.md`](docs/wiki/Verification.md) |
 | `INDEX.md` | Human-readable theorem statements, stable identifiers, source files, and Research Notes links. | [`INDEX.md`](INDEX.md) |
 | `PUBLIC_CORE.md` / `NAMESPACE.md` | Export inventory and formal/empirical contribution boundary. | [`PUBLIC_CORE.md`](PUBLIC_CORE.md), [`NAMESPACE.md`](NAMESPACE.md) |
 | `scripts/` | Pinned bootstrap, development build, formal audits, and changed-document/artifact validation. | [`scripts/AGENTS.md`](scripts/AGENTS.md) |
@@ -46,6 +47,7 @@ lake build TheoremLibrary
 bash scripts/dev_check.sh
 bash scripts/validate_formal.sh
 python scripts/test_docs_hygiene.py
+bash scripts/mutation_baseline.sh --check
 ```
 
 The existing formal CI source is [`.github/workflows/lean.yml`](.github/workflows/lean.yml), which also contains the single changed-Markdown/artifact guard because this repository has no separate structural-audit workflow. Do not add another guard while Fleet #1032, DSL #586, and Portfolio #84 are under coherence review.
