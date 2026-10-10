@@ -3,9 +3,7 @@
 [![Lean](https://github.com/pH34r-pH/theorem-library/actions/workflows/lean.yml/badge.svg)](https://github.com/pH34r-pH/theorem-library/actions/workflows/lean.yml)
 [![License](https://img.shields.io/github/license/pH34r-pH/theorem-library)](LICENSE)
 
-<p align="center">
-  <img src="docs/assets/hero.webp" alt="Theorem Library — formal mathematics and reusable theorem graph" width="100%">
-</p>
+![Theorem Library — formal mathematics and reusable theorem graph](docs/assets/hero.png)
 
 **Machine-checkable mathematics extracted from an empirical research program.**
 
