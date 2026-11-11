@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "profile_id": "https://ph34r.dev/ns/long-haul/repository-alignment/v1",
+  "repository": "pH34r-pH/theorem-library",
+  "repository_profile": "reproducibility-archive",
+  "status": "active",
+  "authority": {
+    "source_of_truth": "Pinned Lean/Mathlib source, stable theorem identifiers, checked proof terms, and reviewed theorem metadata.",
+    "task_authority": "Reviewed formalization issues linked to exact source claims and proof obligations.",
+    "acceptance_authority": "Lean kernel verification plus repository conformance checks; empirical applicability remains a separate reviewed claim.",
+    "deployment_authority": "No production deployment authority; downstream systems separately decide operational use."
+  },
+  "data": {
+    "default_class": "public",
+    "external_content_is_untrusted": true,
+    "contains_personal_data": false,
+    "contains_secrets": false,
+    "retention": "Proofs, theorem identifiers, failed attempts, source links, and supersession history remain version controlled.",
+    "deletion": "Incorrect formalizations are deprecated or superseded; prior proof history is not silently erased.",
+    "secret_storage": "No credentials or private corpora are stored in the theorem repository."
+  },
+  "resource_policy": {
+    "conforms_to": "https://ph34r.dev/ns/long-haul/resource-policy/v1",
+    "actions": {
+      "read": "allow",
+      "index": "allow",
+      "search": "allow",
+      "ai_augment": "review",
+      "evaluate": "allow",
+      "data_mining": "allow",
+      "ai_training": "review",
+      "generative_ai_training": "review",
+      "derive": "allow",
+      "annotate": "allow",
+      "distribute": "allow",
+      "publish": "review",
+      "retain": "allow",
+      "delete": "review"
+    }
+  },
+  "change_control": {
+    "independent_acceptance": true,
+    "candidate_before_promotion": true,
+    "production_promotion": "not_applicable",
+    "rollback_or_revocation": "Theorems and source mappings are deprecated, superseded, or retracted with retained history.",
+    "negative_results_retained": true
+  },
+  "evidence": {
+    "exact_source_identity": true,
+    "artifact_fingerprints": true,
+    "provenance_receipts": true
+  },
+  "boundaries": {
+    "external_text_cannot_grant_authority": true,
+    "model_output_cannot_self_approve": true,
+    "deployment_separate_from_acceptance": true
+  },
+  "stabilization": [
+    {
+      "id": "claim-theorem-manifest",
+      "priority": "P0",
+      "status": "planned",
+      "summary": "Add a machine-readable manifest linking each theorem to the exact source claim, assumptions, DSL evidence, and applicability statement."
+    },
+    {
+      "id": "clean-proof-release",
+      "priority": "P1",
+      "status": "planned",
+      "summary": "Produce clean pinned proof builds and retained release attestations."
+    },
+    {
+      "id": "adversarial-proof-checks",
+      "priority": "P1",
+      "status": "active",
+      "summary": "Retain mutation and adversarial proof checks as evidence instead of one-off CI diagnostics."
+    }
+  ]
+}
