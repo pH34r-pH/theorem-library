@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000002",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.Projection",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/Projection.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.tangentProject_radial"
+  },
+  "publicReference": {
+    "indexLabel": "FRM-000002",
+    "publicImport": true,
+    "researchNotes": null,
+    "relatedDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Projection",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Projection.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.tangentProject_tangent"
+      }
+    ],
+    "aliases": {}
+  },
+  "proofSource": {
+    "commit": "2d07026173ab9a9a98f4a5473e7769a36b84ce52",
+    "sha256": {
+      "TheoremLibrary/Geometry/Sphere/Projection.lean": "1ac25387835709e138e27d8b1cd1cff578346407c0e5259b2965e2606b2aae23"
+    }
+  },
+  "formalScope": {
+    "map": "Pᵤ(v) = v − ⟨u, v⟩u",
+    "domain": "Finite real coordinate space with the Euclidean dot product.",
+    "premises": [
+      "Radial annihilation uses ⟨u, u⟩ = 1.",
+      "Tangent preservation uses ⟨u, v⟩ = 0."
+    ],
+    "claim": "Pᵤ(u) = 0 for a unit u. Pᵤ(v) = v for a perturbation orthogonal to u.",
+    "extent": "Two algebraic identities for the displayed linear map.",
+    "studyBoundary": "Identifying the map with a normalization derivative requires the separate calculus result. Learned representations require separate evidence."
+  },
+  "studyHandoff": {
+    "checkpoint": null,
+    "applicability": "unmeasured",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "population": null
+  }
+}

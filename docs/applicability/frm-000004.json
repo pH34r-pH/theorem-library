@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000004",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.Normalization",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/Normalization.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.hasFDerivAt_inv_norm_of_norm_eq_one"
+  },
+  "publicReference": {
+    "indexLabel": "FRM-000004",
+    "publicImport": true,
+    "researchNotes": null,
+    "relatedDeclarations": [],
+    "aliases": {}
+  },
+  "proofSource": {
+    "commit": "2d07026173ab9a9a98f4a5473e7769a36b84ce52",
+    "sha256": {
+      "TheoremLibrary/Geometry/Sphere/Normalization.lean": "8a46141ed9ed37ea978738d58f7960f27b9758502cb044bb0101768c263ea854"
+    }
+  },
+  "formalScope": {
+    "map": "x ↦ ‖x‖⁻¹",
+    "domain": "Real inner-product space.",
+    "premises": [
+      "The evaluation point u satisfies ‖u‖ = 1, so its norm is nonzero."
+    ],
+    "claim": "At u the reciprocal norm has Fréchet derivative v ↦ −⟨u, v⟩.",
+    "extent": "One local scalar derivative at unit radius.",
+    "studyBoundary": "This derivative concerns exact reciprocal norm. A floor or regularization changes the map."
+  },
+  "studyHandoff": {
+    "checkpoint": null,
+    "applicability": "unmeasured",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "population": null
+  }
+}

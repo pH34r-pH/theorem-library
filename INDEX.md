@@ -2,7 +2,51 @@
 
 This index is the human-readable entry point to the public Lean library. It describes what each stable result says and links to the source that proves it. Research-specific interpretation lives in the [Research Notes](https://github.com/pH34r-pH/research-notes).
 
-Each applicability record pins the Lean sources and states the conditions and scope of the indexed result. Its study handoff records applicability as unmeasured in the theorem library. The linked Research Notes checkpoint is where study-specific evidence can be reconciled.
+Each applicability record pins the Lean sources and states the conditions and scope of the indexed result. Its study handoff records applicability as unmeasured in the theorem library. Where a relevant public Research Notes checkpoint exists, the record links it. A `null` checkpoint marks a result with no specific public handoff.
+
+## Foundations of normalization
+
+### FRM-000001 — derivative of exact normalization away from zero
+
+For nonzero `x`, the Fréchet derivative of `x ↦ (1 / ‖x‖) • x` is the tangent projector at the unit direction `x / ‖x‖`, scaled by the inverse radius. This statement concerns the derivative at a single point.
+
+[Applicability record](docs/applicability/frm-000001.json) · [Lean source](TheoremLibrary/Geometry/Sphere/Normalization.lean) · [Research checkpoint](https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy)
+
+### FRM-000002 — radial and tangent projection identities
+
+The map `v ↦ v − ⟨u, v⟩u` sends `u` to zero when `u` has unit length. It fixes `v` when `v` is orthogonal to `u`.
+
+[Applicability record](docs/applicability/frm-000002.json) · [Lean source](TheoremLibrary/Geometry/Sphere/Projection.lean) · [Nonunit counterexample](scripts/fixtures/ApplicabilityBoundary.lean)
+
+### FRM-000003 — derivative of the norm at unit radius
+
+At a unit vector `u`, the Fréchet derivative of the real inner-product norm sends `v` to `⟨u, v⟩`.
+
+[Applicability record](docs/applicability/frm-000003.json) · [Lean source](TheoremLibrary/Geometry/Sphere/NormDerivative.lean)
+
+### FRM-000004 — derivative of the reciprocal norm at unit radius
+
+At a unit vector `u`, the Fréchet derivative of the reciprocal norm sends `v` to `−⟨u, v⟩`.
+
+[Applicability record](docs/applicability/frm-000004.json) · [Lean source](TheoremLibrary/Geometry/Sphere/Normalization.lean)
+
+### FRM-000005 — derivative of normalization at unit radius
+
+At a unit vector `u`, the Fréchet derivative of normalization is the unscaled tangent projector `v ↦ v − ⟨u, v⟩u`.
+
+[Applicability record](docs/applicability/frm-000005.json) · [Lean source](TheoremLibrary/Geometry/Sphere/Normalization.lean) · [Nonunit counterexample](scripts/fixtures/ApplicabilityBoundary.lean) · [Research checkpoint](https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy)
+
+### FRM-000006 — radial annihilation by the normalization derivative
+
+At nonzero `x`, the derivative of normalization sends the radial direction `x` to zero.
+
+[Applicability record](docs/applicability/frm-000006.json) · [Lean source](TheoremLibrary/Geometry/Sphere/Normalization.lean) · [Research checkpoint](https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy)
+
+### FRM-000007 — tangent scaling by the normalization derivative
+
+At nonzero `x`, the derivative of normalization sends an orthogonal perturbation `v` to `(1 / ‖x‖) • v`.
+
+[Applicability record](docs/applicability/frm-000007.json) · [Lean source](TheoremLibrary/Geometry/Sphere/Normalization.lean) · [Research checkpoint](https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy)
 
 ## Hypersphere normalization
 

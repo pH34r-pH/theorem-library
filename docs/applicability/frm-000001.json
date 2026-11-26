@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000001",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.Normalization",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/Normalization.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.hasFDerivAt_normalization_of_ne_zero"
+  },
+  "publicReference": {
+    "indexLabel": "FRM-000001",
+    "publicImport": true,
+    "researchNotes": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy",
+    "relatedDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Normalization",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Normalization.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.hasFDerivAt_normalization_native_of_ne_zero"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Normalization",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Normalization.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_native_derivative_eq_scaled_tangent_projector"
+      }
+    ],
+    "aliases": {}
+  },
+  "proofSource": {
+    "commit": "2d07026173ab9a9a98f4a5473e7769a36b84ce52",
+    "sha256": {
+      "TheoremLibrary/Geometry/Sphere/Normalization.lean": "8a46141ed9ed37ea978738d58f7960f27b9758502cb044bb0101768c263ea854"
+    }
+  },
+  "formalScope": {
+    "map": "N(x) = (1 / ‖x‖) • x",
+    "domain": "Real inner-product space.",
+    "premises": [
+      "The evaluation point x is nonzero."
+    ],
+    "claim": "The Fréchet derivative at x is (1 / ‖x‖) times the orthogonal projector onto the complement of the unit direction x / ‖x‖.",
+    "extent": "One local derivative of exact normalization.",
+    "studyBoundary": "An implemented cutoff, another norm, or a surrounding computation needs separate evidence."
+  },
+  "studyHandoff": {
+    "checkpoint": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy",
+    "applicability": "unmeasured",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "population": null
+  }
+}
