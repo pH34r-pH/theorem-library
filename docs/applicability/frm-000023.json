@@ -37,5 +37,32 @@
         "TheoremLibrary.Geometry.Sphere.downstream_radial_annihilation"
       ]
     }
+  },
+  "proofSource": {
+    "commit": "950b48d502015daa1c648b5ce7a3b72eee367995",
+    "sha256": {
+      "TheoremLibrary/Geometry/Sphere/RadialMemory.lean": "d273d547b92baa71a387372c029261da7800ab495a358bf23f3aae1c3909db71"
+    }
+  },
+  "formalScope": {
+    "map": "N(x) = (1 / ‖x‖) • x, followed by a deterministic transition and observation of the normalized state.",
+    "domain": "real inner-product space; the observation codomain can be an arbitrary type",
+    "premises": [
+      "The positive-scale quotient is stated on nonzero x and y, with scaling r > 0.",
+      "The finite-horizon boundary evaluates the same deterministic transition and observation after the same normalized state, for any natural-number horizon.",
+      "The first-order radial-annihilation statement uses a nonzero state and an infinitesimal multiple of that state."
+    ],
+    "extent": "Exact positive-scale factorization, a finite deterministic horizon, and the separately stated local derivative boundary.",
+    "claim": "Equal normalized nonzero vectors lie in the same positive-scale orbit. A deterministic consumer receiving only the exact normalized state agrees on those rescalings.",
+    "studyBoundary": "Upstream direction encoding, additional state inputs, and empirical recurrence require their own evidence."
+  },
+  "studyHandoff": {
+    "checkpoint": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-001005--frm-000023--positive-scale-quotient-and-radial-memory-boundary",
+    "applicability": "unmeasured",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "population": null
   }
 }

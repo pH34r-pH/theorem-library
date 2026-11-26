@@ -2,6 +2,8 @@
 
 This index is the human-readable entry point to the public Lean library. It describes what each stable result says and links to the source that proves it. Research-specific interpretation lives in the [Research Notes](https://github.com/pH34r-pH/research-notes).
 
+Each applicability record pins the Lean sources and states the conditions and scope of the indexed result. Its study handoff records applicability as unmeasured in the theorem library. The linked Research Notes checkpoint is where study-specific evidence can be reconciled.
+
 ## Hypersphere normalization
 
 ### LIB-SPH-002 / FRM-000020 — normalization derivative anisotropy

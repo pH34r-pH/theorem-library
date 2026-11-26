@@ -35,5 +35,33 @@
         "TheoremLibrary.Geometry.Sphere.hasFDerivAt_normalization_of_ne_zero"
       ]
     }
+  },
+  "proofSource": {
+    "commit": "950b48d502015daa1c648b5ce7a3b72eee367995",
+    "sha256": {
+      "TheoremLibrary/Geometry/Sphere/Anisotropy.lean": "9ea8e94da2b67599faeded5229beb65f5da1b4087b1c18b81992408fec3a5bb7",
+      "TheoremLibrary/Geometry/Sphere/Normalization.lean": "8a46141ed9ed37ea978738d58f7960f27b9758502cb044bb0101768c263ea854"
+    }
+  },
+  "formalScope": {
+    "map": "N(x) = (1 / ‖x‖) • x",
+    "domain": "real inner-product space",
+    "premises": [
+      "The normalization derivative is evaluated at x ≠ 0.",
+      "Radial directions are multiples of x; tangent directions satisfy ⟨x, v⟩ = 0.",
+      "Tangent preservation without scaling requires ‖x‖ = 1."
+    ],
+    "extent": "One local derivative of the exact normalization map.",
+    "claim": "The local derivative annihilates radial directions and scales tangent directions by reciprocal radius.",
+    "studyBoundary": "An implemented cutoff, mask, different norm, or surrounding computation needs its own applicability evidence."
+  },
+  "studyHandoff": {
+    "checkpoint": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy",
+    "applicability": "unmeasured",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "population": null
   }
 }

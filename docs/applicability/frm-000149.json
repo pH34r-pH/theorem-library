@@ -33,5 +33,33 @@
       }
     ],
     "aliases": {}
+  },
+  "proofSource": {
+    "commit": "950b48d502015daa1c648b5ce7a3b72eee367995",
+    "sha256": {
+      "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean": "a804d15d6005597590b2695d3cc858523edfbec9fa697ec95f28ae314327ad78",
+      "TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean": "f673700672d776c7feb86876869dc036d596b9a4b6f7e22194034a4c4de27b40"
+    }
+  },
+  "formalScope": {
+    "map": "Exact normalization composed before or after a derivative map, plus a scalar loss composed with normalization.",
+    "domain": "real inner-product spaces for normalization; the downstream linear codomain may be a normed real space; the gradient result assumes a complete inner-product space",
+    "premises": [
+      "Each normalization derivative used for a kernel or tangent claim is evaluated at its corresponding nonzero input.",
+      "The post-normalization kernel depends on where the producer Jacobian sends the input direction. Tangent gain requires an image orthogonal to the normalization input.",
+      "The gradient result assumes the stated gradient at the normalized point."
+    ],
+    "extent": "Local composition and gradient identities, and a checked two-dimensional affine-producer counterexample.",
+    "claim": "The post-normalization kernel is the producer-Jacobian preimage of the output radial line. The two-dimensional witness shows that an input radial direction can survive composition.",
+    "studyBoundary": "A product of Jacobians across recurrent steps needs an independently justified model of the composed maps and their varying radial and tangent directions."
+  },
+  "studyHandoff": {
+    "checkpoint": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#frm-000149--composition-and-gradient-boundaries",
+    "applicability": "unmeasured",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "population": null
   }
 }
