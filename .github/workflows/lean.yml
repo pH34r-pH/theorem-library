@@ -30,7 +30,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: lean-${{ github.workflow }}-${{ github.ref }}
+  group: lean-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
@@ -57,15 +57,15 @@ jobs:
       - name: Resolve documentation comparison base
         id: docs_base
         shell: bash
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BASE: ${{ github.event.before }}
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
-            echo "sha=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
-          else
-            base="${{ github.event.before }}"
-            if [[ -z "$base" || "$base" == "0000000000000000000000000000000000000000" ]]; then base="HEAD^"; fi
-            echo "sha=$base" >> "$GITHUB_OUTPUT"
-          fi
+          base="$PR_BASE"
+          if [[ "$GITHUB_EVENT_NAME" != pull_request ]]; then base="$PUSH_BASE"; fi
+          if [[ -z "$base" || "$base" == "0000000000000000000000000000000000000000" ]]; then base="HEAD^"; fi
+          printf 'sha=%s\n' "$(git rev-parse --verify "$base^{commit}")" >> "$GITHUB_OUTPUT"
       - name: Run changed-file documentation and artifact hygiene
         run: python scripts/docs_hygiene.py --changed-since '${{ steps.docs_base.outputs.sha }}'
       - name: Run documentation and script regression tests
