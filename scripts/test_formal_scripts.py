@@ -36,6 +36,7 @@ case "$*" in
     exit 1 ;;
   'env leanchecker TheoremLibrary') record leanchecker ;;
   'env lean Mutate.lean') record mutation-lean ;;
+  'env lean scripts/fixtures/ApplicabilityBoundary.lean') record applicability-lean ;;
   'build') record audit-build ;;
   'env '*'/axiom-audit '*) record axiom-audit ;;
   *) printf 'Unexpected fixture Lake command %s\n' "$*" >&2; exit 90 ;;
@@ -145,6 +146,7 @@ class ShellFailureTests(unittest.TestCase):
             "leanchecker": "Independent leanchecker validation failed",
             "mutation-report": "Mutation fixture report validation failed",
             "mutation-lean": "Lean mutation specification fixture failed",
+            "applicability-lean": "Lean applicability boundary fixture failed",
             "placeholder": "Placeholder source scan failed",
             "wrong-audit": "Unexpected axiom-audit revision",
             "dirty-audit": "Refusing a modified axiom-audit checkout",
@@ -161,7 +163,8 @@ class ShellFailureTests(unittest.TestCase):
 
 class BootstrapInventoryTests(unittest.TestCase):
     def test_bootstrap_covers_exact_direct_mathlib_imports(self):
-        sources = [ROOT / "TheoremLibrary.lean", ROOT / "Mutate.lean", *(ROOT / "TheoremLibrary").rglob("*.lean")]
+        sources = [ROOT / "TheoremLibrary.lean", ROOT / "Mutate.lean", *(ROOT / "TheoremLibrary").rglob("*.lean"),
+                   *(ROOT / "scripts/fixtures").glob("*.lean")]
         imports = {
             name for source in sources for line in source.read_text(encoding="utf-8").splitlines()
             if line.startswith("import ") for name in line.split()[1:] if re.fullmatch(r"Mathlib(?:[.]\w+)+", name)

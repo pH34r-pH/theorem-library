@@ -18,7 +18,9 @@ class ProofCandidateTest(unittest.TestCase):
         self.root.mkdir()
         self.git("init", "-q")
         for name in FIXED_INPUTS:
-            (self.root / name).write_bytes(b"fixture\n")
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"fixture\n")
         (self.root / "lean-toolchain").write_text("leanprover/lean4:v4.34.0-rc2\n", encoding="utf-8")
         (self.root / "lake-manifest.json").write_text(json.dumps({
             "packages": [{"name": "mathlib", "rev": "a" * 40}],
@@ -54,6 +56,9 @@ class ProofCandidateTest(unittest.TestCase):
             self.assertEqual(receipt["source_revision"], self.sha)
             self.assertEqual(receipt["mathlib_revision"], "a" * 40)
             self.assertIn("lib/lean/TheoremLibrary/Sample.olean.private", receipt["files_sha256"])
+            self.assertIn("source/Mutate.lean", receipt["files_sha256"])
+            self.assertIn("source/reports/mutation-upstream-fixture.json", receipt["files_sha256"])
+            self.assertIn("source/scripts/fixtures/ApplicabilityBoundary.lean", receipt["files_sha256"])
             self.assertNotIn("lib/lean/Unrelated.olean", archive.getnames())
             self.assertEqual(set(archive.getnames()), {"proof-receipt.json", *receipt["files_sha256"]})
             for name, digest in receipt["files_sha256"].items():

@@ -35,11 +35,12 @@ check_public_reference_resolution
 run_formal_stage 'Independent leanchecker validation' lake env leanchecker TheoremLibrary
 run_formal_stage 'Mutation fixture report validation' python scripts/validate_mutation_fixture_report.py
 run_formal_stage 'Lean mutation specification fixture' lake env lean Mutate.lean
+run_formal_stage 'Lean applicability boundary fixture' lake env lean scripts/fixtures/ApplicabilityBoundary.lean
 
 # Scan project Lean sources, including untracked files, but not dependencies.
 # Deliberately reject placeholder words even in comments. grep errors fail closed.
 shopt -s globstar nullglob
-sources=(Mutate.lean TheoremLibrary.lean TheoremLibrary/**/*.lean)
+sources=(Mutate.lean TheoremLibrary.lean TheoremLibrary/**/*.lean scripts/fixtures/*.lean)
 if grep -nEw 'sorry|admit' "${sources[@]}"; then
   echo 'Placeholder audit failed: remove sorry/admit from project Lean sources.' >&2
   exit 1

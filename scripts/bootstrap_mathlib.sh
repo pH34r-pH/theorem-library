@@ -5,7 +5,7 @@ cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 source scripts/formal_common.sh
 require_pinned_lean
 
-# Fetch the Mathlib imports of TheoremLibrary/ and Mutate.lean and their
+# Fetch the Mathlib imports of the library and its Lean fixtures and their
 # transitive cache dependencies. The offline tests check this direct list.
 run_formal_stage 'Mathlib cache bootstrap' lake exe cache get \
   Mathlib.Algebra.BigOperators.Fin \
