@@ -35,15 +35,22 @@ Use [INDEX.md](INDEX.md) for stable identifiers, plain-language statements, and 
 
 ## Verify locally
 
+Full verification uses Bash, Git, Python 3, and Lake with the Lean toolchain
+pinned in this checkout. Run these commands from the repository root.
+
 ```sh
 bash scripts/bootstrap_mathlib.sh
 lake build TheoremLibrary
 bash scripts/dev_check.sh
 bash scripts/validate_formal.sh
 lake env lean Mutate.lean
+python scripts/test_formal_scripts.py
 ```
 
-The repository pins Lean and Mathlib inputs through `lean-toolchain` and `lake-manifest.json`.
+The shell scripts also accept an absolute script path from another working
+directory. They enter the repository root before selecting the pinned toolchain
+and report the failing stage if a prerequisite or check exits nonzero.
+[Verification commands and evidence](docs/wiki/Verification.md#validation-scripts)
 
 A successful build establishes that the encoded statements follow from their encoded assumptions in that formal environment. It does **not** establish that a particular trained model satisfies those assumptions or that a theorem explains an empirical observation.
 

@@ -16,7 +16,23 @@ This checks the exported library and its dependencies.
 
 ## Validation scripts
 
-The bootstrap/dev/formal scripts add repository-specific checks around source layout, exported declarations, and the intended public-core contract.
+Use Bash, Git, Python 3, and Lake with the committed `lean-toolchain` and
+`lake-manifest.json`. The scripts resolve the repository root from their own
+path, so an absolute invocation also works from another directory.
+
+- `bash scripts/bootstrap_mathlib.sh` verifies the selected Lean version and
+  fetches the transitive cache for the direct Mathlib imports.
+- `bash scripts/dev_check.sh` builds `TheoremLibrary`. Optional arguments are
+  passed to `lake build`.
+- `bash scripts/validate_formal.sh` checks applicability and public names,
+  builds the library, runs leanchecker, verifies the local mutation fixture and
+  report, scans for placeholders, and runs the pinned axiom audit.
+- `python scripts/test_formal_scripts.py` uses offline tool stubs to exercise
+  wrong and missing prerequisites and check that failure stops each stage.
+
+Each shell entrypoint reports the stage and returns a nonzero result when its
+tool fails. The real proof run and the offline script fixtures supply separate
+evidence. The mutation check covers the retained fixture and report.
 
 ## Bounded mutation specification fixture
 
