@@ -1,12 +1,15 @@
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from copy import deepcopy
 
 from docs_hygiene import changed_files, check_paths
 from validate_applicability import RECORD, ROOT, validate
+from validate_public_references import _load_records, validate as validate_public_references
 
 
 class DocumentationHygieneTests(unittest.TestCase):
@@ -85,6 +88,70 @@ class ApplicabilityTests(unittest.TestCase):
                 altered = dict(self.record, studyHandoff={**self.record["studyHandoff"], field: value})
                 with self.assertRaisesRegex(ValueError, "unmeasured applicability"):
                     validate(ROOT, altered)
+
+
+class PublicReferenceTests(unittest.TestCase):
+    def setUp(self):
+        self.records = _load_records(ROOT)
+        self.original = deepcopy(self.records)
+
+    def test_real_inventory_resolves_offline(self):
+        declarations = validate_public_references(ROOT, self.records, self.original.values())
+        self.assertIn("TheoremLibrary.Geometry.Sphere.erased_radius_future", declarations)
+        self.assertIn("TheoremLibrary.Geometry.Sphere.normalization_singularValues", declarations)
+
+    def test_missing_source_and_duplicate_stable_identifier(self):
+        path = "docs/applicability/frm-000133.json"
+        record = self.records[path]
+        record["proof"]["sourcePath"] = "TheoremLibrary/Missing.lean"
+        with self.assertRaisesRegex(ValueError, "missing or mismatched declaration source"):
+            validate_public_references(ROOT, self.records)
+        self.records[path] = self.original[path]
+        self.records["docs/applicability/duplicate.json"] = self.original[path]
+        with self.assertRaisesRegex(ValueError, "duplicate or conflicting stable identifier"):
+            validate_public_references(ROOT, self.records)
+
+    def test_repointing_combined_alias_fails_against_reviewed_base(self):
+        aliases = self.records["docs/applicability/frm-000023.json"]["publicReference"]["aliases"]
+        aliases["LIB-SPH-005"] = aliases["LIB-SPH-001"]
+        with self.assertRaisesRegex(ValueError, "silently removed or repointed: LIB-SPH-005"):
+            validate_public_references(ROOT, self.records, self.original.values())
+
+    def _workspace(self, temporary):
+        root = Path(temporary)
+        for path in ("TheoremLibrary.lean", "INDEX.md", "PUBLIC_CORE.md"):
+            shutil.copyfile(ROOT / path, root / path)
+        shutil.copytree(ROOT / "TheoremLibrary", root / "TheoremLibrary")
+        return root
+
+    def test_stale_public_inventory_and_removed_import(self):
+        for path in ("PUBLIC_CORE.md", "TheoremLibrary.lean"):
+            with self.subTest(path=path), tempfile.TemporaryDirectory() as temporary:
+                root = self._workspace(temporary)
+                file = root / path
+                text = file.read_text(encoding="utf-8")
+                kept = [line for line in text.splitlines() if "Sphere.RadialMemory" not in line]
+                file.write_text("\n".join(kept) + "\n", encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "module inventory differs from the public imports"):
+                    validate_public_references(root, self.records)
+
+    def test_module_rename_can_preserve_stable_names(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._workspace(temporary)
+            original = Path("TheoremLibrary/Geometry/Sphere/RadialMemory.lean")
+            renamed = original.with_name("ScaleQuotient.lean")
+            (root / original).rename(root / renamed)
+            for path in ("TheoremLibrary.lean", "INDEX.md", "PUBLIC_CORE.md"):
+                file = root / path
+                file.write_text(file.read_text(encoding="utf-8").replace("RadialMemory", "ScaleQuotient"),
+                                encoding="utf-8")
+            record = self.records["docs/applicability/frm-000023.json"]
+            for reference in [record["proof"], *record["publicReference"]["relatedDeclarations"]]:
+                reference["module"] = reference["module"].replace("RadialMemory", "ScaleQuotient")
+                reference["sourcePath"] = renamed.as_posix()
+            with (root / renamed).open("a", encoding="utf-8") as source:
+                source.write("\ntheorem privateFixtureHelper : True := True.intro\n")
+            validate_public_references(root, self.records, self.original.values())
 
 
 if __name__ == "__main__":

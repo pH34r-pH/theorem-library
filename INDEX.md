@@ -8,6 +8,8 @@ This index is the human-readable entry point to the public Lean library. It desc
 
 For a nonzero vector, normalization removes infinitesimal motion in the radial direction and scales tangent motion by inverse radius. At unit radius, tangent motion is preserved to first order.
 
+[Applicability record](docs/applicability/frm-000020.json)
+
 **Source:** [Anisotropy.lean](TheoremLibrary/Geometry/Sphere/Anisotropy.lean) · [Normalization.lean](TheoremLibrary/Geometry/Sphere/Normalization.lean)
 
 **Research explanation:** [Formal checkpoint](https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy)
@@ -15,6 +17,8 @@ For a nonzero vector, normalization removes infinitesimal motion in the radial d
 ### LIB-SPH-003 / FRM-000021 — scale-invariant loss geometry
 
 For differentiable losses composed through normalization, first-order radial sensitivity vanishes. Related results characterize normalized tangent updates and their angular scaling.
+
+[Applicability record](docs/applicability/frm-000021.json)
 
 **Source:** [ScaleInvariantLoss.lean](TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean) · [NormalizationGradient.lean](TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean)
 
@@ -25,6 +29,8 @@ For differentiable losses composed through normalization, first-order radial sen
 Positive rescalings of the same nonzero proposal normalize to the same state. Once that radius has been erased, deterministic downstream computation that receives only the normalized state cannot determine which positive rescaling produced it.
 
 This result is deliberately narrower than saying that a recurrent model cannot preserve information previously associated with radius; upstream computation may move such information into direction before normalization.
+
+[Applicability record for both LIB references](docs/applicability/frm-000023.json)
 
 **Source:** [RadialMemory.lean](TheoremLibrary/Geometry/Sphere/RadialMemory.lean)
 
@@ -45,6 +51,8 @@ The [applicability record](docs/applicability/frm-000133.json) pins the declarat
 These results describe where the radial/tangent properties of normalization survive composition with surrounding maps and give exact gradient identities for differentiable normalized losses.
 
 Their main purpose is to stop a local theorem about normalization from being applied automatically to an entire learned recurrence.
+
+[Applicability record](docs/applicability/frm-000149.json)
 
 **Source:** [NormalizationComposition.lean](TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean) · [NormalizationGradient.lean](TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean)
 

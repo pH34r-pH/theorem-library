@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000149",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.post_normalization_kernel"
+  },
+  "publicReference": {
+    "indexLabel": "FRM-000149",
+    "publicImport": true,
+    "researchNotes": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#frm-000149--composition-and-gradient-boundaries",
+    "relatedDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.pre_normalization_kills_radial"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.two_dimensional_post_normalization_counterexample"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationGradient",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.hasGradientAt_normalized_loss"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationGradient",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalized_gradient_step_velocity"
+      }
+    ],
+    "aliases": {}
+  }
+}
