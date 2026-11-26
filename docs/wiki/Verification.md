@@ -83,6 +83,31 @@ The remaining blocker is upstream usage rights, not Lean compatibility.
 
 The stable formal-proof CI job runs against exact public source revisions. Downstream private publication/qualification can require a successful main-branch run on the same exact commit before consuming that source.
 
+For a retained proof candidate, run the Lean workflow on `main` with the
+`retain_proof_candidate` input enabled. The workflow recompiles the pinned
+library in a fresh runner, checks the public declarations and axioms, and
+packages the checked Git sources and compiled public modules. The bundle
+includes a receipt with each member's SHA-256, the exact source revision,
+the observed Lean version, and the locked Mathlib revision.
+
+```sh
+gh workflow run lean.yml -R pH34r-pH/theorem-library --ref main \
+  -F retain_proof_candidate=true
+```
+
+Download the `theorem-proof` artifact for the completed run and verify it using
+the exact source SHA shown for that run.
+
+```sh
+gh attestation verify theorem-proof.tar.gz -R pH34r-pH/theorem-library \
+  --signer-workflow pH34r-pH/theorem-library/.github/workflows/lean.yml \
+  --source-ref refs/heads/main --source-digest "$REVIEWED_PROOF_SHA"
+```
+
+The attestation binds the bundle to the workflow and reviewed revision.
+Publication of a versioned release is a separate owner decision. See the
+[GitHub artifact attestation guide](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations).
+
 ## What verification excludes
 
 A formal build does not:
