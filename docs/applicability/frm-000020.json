@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000020",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.Anisotropy",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/Anisotropy.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.fderiv_normalization_eq_scaled_tangent_projector"
+  },
+  "publicReference": {
+    "indexLabel": "LIB-SPH-002 / FRM-000020",
+    "publicImport": true,
+    "researchNotes": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy",
+    "relatedDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Anisotropy",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Anisotropy.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_derivative_gain_separation"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Anisotropy",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Anisotropy.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.fderiv_normalization_tangent_of_norm_eq_one"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Normalization",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Normalization.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.hasFDerivAt_normalization_of_ne_zero"
+      }
+    ],
+    "aliases": {
+      "LIB-SPH-002": [
+        "TheoremLibrary.Geometry.Sphere.fderiv_normalization_eq_scaled_tangent_projector",
+        "TheoremLibrary.Geometry.Sphere.normalization_derivative_gain_separation",
+        "TheoremLibrary.Geometry.Sphere.fderiv_normalization_tangent_of_norm_eq_one",
+        "TheoremLibrary.Geometry.Sphere.hasFDerivAt_normalization_of_ne_zero"
+      ]
+    }
+  }
+}

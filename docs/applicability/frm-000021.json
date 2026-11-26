@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000021",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.scale_invariant_radial_flatness"
+  },
+  "publicReference": {
+    "indexLabel": "LIB-SPH-003 / FRM-000021",
+    "publicImport": true,
+    "researchNotes": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-003--frm-000021--scale-invariant-loss-geometry",
+    "relatedDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.hasDerivAt_normalized_tangent_step"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.norm_angular_velocity_scaled"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationGradient",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalized_loss_gradient_orthogonal"
+      }
+    ],
+    "aliases": {
+      "LIB-SPH-003": [
+        "TheoremLibrary.Geometry.Sphere.scale_invariant_radial_flatness",
+        "TheoremLibrary.Geometry.Sphere.hasDerivAt_normalized_tangent_step",
+        "TheoremLibrary.Geometry.Sphere.norm_angular_velocity_scaled",
+        "TheoremLibrary.Geometry.Sphere.normalized_loss_gradient_orthogonal"
+      ]
+    }
+  }
+}

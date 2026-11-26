@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000023",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.normalizeState_eq_iff_positive_scale"
+  },
+  "publicReference": {
+    "indexLabel": "LIB-SPH-001/005 / FRM-000023",
+    "publicImport": true,
+    "researchNotes": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-001005--frm-000023--positive-scale-quotient-and-radial-memory-boundary",
+    "relatedDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.positiveScaleInvariant_iff_normalizeFactors"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.erased_radius_future"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.downstream_radial_annihilation"
+      }
+    ],
+    "aliases": {
+      "LIB-SPH-001": [
+        "TheoremLibrary.Geometry.Sphere.normalizeState_eq_iff_positive_scale",
+        "TheoremLibrary.Geometry.Sphere.positiveScaleInvariant_iff_normalizeFactors"
+      ],
+      "LIB-SPH-005": [
+        "TheoremLibrary.Geometry.Sphere.erased_radius_future",
+        "TheoremLibrary.Geometry.Sphere.downstream_radial_annihilation"
+      ]
+    }
+  }
+}

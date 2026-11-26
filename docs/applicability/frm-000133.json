@@ -21,11 +21,20 @@
   "syntheticExample": {
     "numericType": "IEEE-754 binary64",
     "epsilon": 0.125,
-    "step": 0.0000001,
-    "absoluteTolerance": 0.000000001,
-    "activeInput": [2.0, 0.0],
-    "smallInput": [0.0625, 0.0],
-    "unitTangent": [0.0, 1.0],
+    "step": 1e-07,
+    "absoluteTolerance": 1e-09,
+    "activeInput": [
+      2.0,
+      0.0
+    ],
+    "smallInput": [
+      0.0625,
+      0.0
+    ],
+    "unitTangent": [
+      0.0,
+      1.0
+    ],
     "cutoffPolicy": "use a constant unit direction when norm is below epsilon",
     "maskPolicy": "exclude masked rows before normalization",
     "expectedTangentialGain": {
@@ -48,5 +57,28 @@
       "active": "unmasked rows assigned to the exact normalization branch by the tested operator",
       "cutoff": "unmasked rows assigned to the tested operator's cutoff branch"
     }
+  },
+  "publicReference": {
+    "indexLabel": "FRM-000133",
+    "publicImport": true,
+    "researchNotes": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#frm-000133--normalization-spectrum",
+    "relatedDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_derivative_ker"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_derivative_range"
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_derivative_rank"
+      }
+    ],
+    "aliases": {}
   }
 }

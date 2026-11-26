@@ -125,4 +125,6 @@ jobs:
         run: lake build TheoremLibrary
 
       - name: Independently validate compiled proofs
+        env:
+          THEOREM_REFERENCE_BASE: ${{ steps.docs_base.outputs.sha }}
         run: bash scripts/validate_formal.sh
