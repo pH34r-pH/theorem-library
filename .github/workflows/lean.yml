@@ -59,8 +59,10 @@ jobs:
           fi
       - name: Run changed-file documentation and artifact hygiene
         run: python scripts/docs_hygiene.py --changed-since '${{ steps.docs_base.outputs.sha }}'
-      - name: Run documentation hygiene regression tests
-        run: python scripts/test_docs_hygiene.py
+      - name: Run documentation and script regression tests
+        run: |
+          python scripts/test_docs_hygiene.py
+          python scripts/test_formal_scripts.py
       - name: Select changed living Markdown
         id: docs_files
         shell: bash

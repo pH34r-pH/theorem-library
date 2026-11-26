@@ -8,6 +8,7 @@ These scripts implement the repository's existing formal validation path. Read t
 - `docs_hygiene.py` / `test_docs_hygiene.py` check changed living-document names, actual Git rename destinations, and incidental artifacts; the workflow sends changed living Markdown to pinned style/link tools.
 - `validate_applicability.py` checks the FRM-000133 proof pin, synthetic boundary cases, and unmeasured study handoff during formal validation.
 - `validate_public_references.py` checks indexed applicability records against the public import inventory and renders the declaration checks that Lean elaborates.
+- `formal_common.sh` checks the selected Lean version and propagates stage diagnostics. `test_formal_scripts.py` uses offline tool stubs to check the entrypoints and their cache inventory.
 - `validate_mutation_fixture_report.py` checks captured upstream mutation coordinates against the report's embedded fixture source; it does not run or replace the upstream mutation engine.
 
 Do not replace these with an unpinned local check or add another custom CI guard. Keep external tool revisions and source checks explicit.
@@ -17,4 +18,5 @@ bash scripts/bootstrap_mathlib.sh
 bash scripts/dev_check.sh
 bash scripts/validate_formal.sh
 python scripts/test_docs_hygiene.py
+python scripts/test_formal_scripts.py
 ```
