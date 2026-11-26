@@ -100,6 +100,20 @@ class PublicReferenceTests(unittest.TestCase):
         self.assertIn("TheoremLibrary.Geometry.Sphere.erased_radius_future", declarations)
         self.assertIn("TheoremLibrary.Geometry.Sphere.normalization_singularValues", declarations)
 
+    def test_foundational_records_are_present(self):
+        foundational_ids = {f"FRM-{number:06d}" for number in range(1, 8)}
+        self.assertTrue(foundational_ids <= {record["id"] for record in self.records.values()})
+        self.records.pop("docs/applicability/frm-000004.json")
+        with self.assertRaisesRegex(ValueError, "missing applicability records"):
+            validate_public_references(ROOT, self.records)
+
+    def test_null_research_checkpoint_cannot_hide_an_index_link(self):
+        record = self.records["docs/applicability/frm-000001.json"]
+        record["publicReference"]["researchNotes"] = None
+        record["studyHandoff"]["checkpoint"] = None
+        with self.assertRaisesRegex(ValueError, "unexpected Research Notes checkpoint for FRM-000001"):
+            validate_public_references(ROOT, self.records)
+
     def test_extended_applicability_pins_and_handoff(self):
         for path, record in self.records.items():
             if Path(path) != RECORD:

@@ -101,8 +101,12 @@ def _check_card(root, path, record, cards, exported):
     links = set(re.findall(r"\]\((TheoremLibrary/[^ )]+\.lean)\)", card))
     require(sources == links and f"]({path})" in card, f"source or applicability links differ for {label}")
     notes = public["researchNotes"]
-    require(notes.startswith(RESEARCH_NOTES) and re.fullmatch("[a-z0-9-]+", notes.removeprefix(RESEARCH_NOTES))
-            and f"]({notes})" in card, f"Research Notes destination differs for {label}")
+    if notes is None:
+        require(f"]({RESEARCH_NOTES}" not in card, f"unexpected Research Notes checkpoint for {label}")
+    else:
+        require(isinstance(notes, str) and notes.startswith(RESEARCH_NOTES)
+                and re.fullmatch("[a-z0-9-]+", notes.removeprefix(RESEARCH_NOTES))
+                and f"]({notes})" in card, f"Research Notes destination differs for {label}")
 
 
 def validate(root, records, previous=()):

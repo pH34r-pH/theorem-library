@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000007",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.Normalization",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/Normalization.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.fderiv_normalization_apply_tangent"
+  },
+  "publicReference": {
+    "indexLabel": "FRM-000007",
+    "publicImport": true,
+    "researchNotes": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy",
+    "relatedDeclarations": [],
+    "aliases": {}
+  },
+  "proofSource": {
+    "commit": "2d07026173ab9a9a98f4a5473e7769a36b84ce52",
+    "sha256": {
+      "TheoremLibrary/Geometry/Sphere/Normalization.lean": "8a46141ed9ed37ea978738d58f7960f27b9758502cb044bb0101768c263ea854"
+    }
+  },
+  "formalScope": {
+    "map": "N(x) = (1 / ‖x‖) • x",
+    "domain": "Real inner-product space.",
+    "premises": [
+      "The evaluation point x is nonzero.",
+      "The perturbation v satisfies ⟨x, v⟩ = 0."
+    ],
+    "claim": "The derivative at x sends v to (1 / ‖x‖) • v.",
+    "extent": "One local derivative applied to an orthogonal perturbation.",
+    "studyBoundary": "A cutoff, mask, or surrounding computation can change the measured tangent response."
+  },
+  "studyHandoff": {
+    "checkpoint": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy",
+    "applicability": "unmeasured",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "population": null
+  }
+}
