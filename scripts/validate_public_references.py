@@ -136,7 +136,11 @@ def render_lean(root, inventory, modules):
     vocabulary = ",\n  ".join(json.dumps(module) for module in sorted(modules))
     declarations = ",\n  ".join(f"({json.dumps(name)}, {json.dumps(module)})"
                               for name, module in sorted(inventory.items()))
-    return f"{check}\n\nrun_cmd checkPublicTheorems #[\n  {vocabulary}\n] #[\n  {declarations}\n]\n"
+    return (
+        f"{check}\n\nprivate def listedModules : Array String := #[\n  {vocabulary}\n]\n"
+        f"\nprivate def listedTheorems : Array (String × String) := #[\n  {declarations}\n]\n"
+        "\nrun_cmd checkPublicTheorems listedModules listedTheorems\n"
+    )
 
 
 def _previous_records(root, base):
