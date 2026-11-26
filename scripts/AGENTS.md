@@ -7,7 +7,7 @@ These scripts implement the repository's existing formal validation path. Read t
 - `validate_formal.sh` builds, runs `leanchecker`, rejects `sorry`/`admit`, and builds the pinned axiom-audit tool with the permitted axiom list.
 - `docs_hygiene.py` / `test_docs_hygiene.py` check changed living-document names, actual Git rename destinations, and incidental artifacts; the workflow sends changed living Markdown to pinned style/link tools.
 - `validate_applicability.py` checks the FRM-000133 proof pin, synthetic boundary cases, and unmeasured study handoff during formal validation.
-- `validate_public_references.py` checks indexed applicability records against the public import inventory and renders the declaration checks that Lean elaborates.
+- `validate_public_references.py` checks the applicability records and renders the inputs for `fixtures/PublicTheoremInventory.lean`. Lean compares them with the named theorems and their defining modules in the compiled public library.
 - `formal_common.sh` checks the selected Lean version and propagates stage diagnostics. `test_formal_scripts.py` uses offline tool stubs to check the entrypoints and their cache inventory.
 - `validate_mutation_fixture_report.py` checks captured upstream mutation coordinates against the report's embedded fixture source; it does not run or replace the upstream mutation engine.
 - `fixtures/ApplicabilityBoundary.lean` proves counterexamples when a unit premise is weakened. The formal validation script compiles it against the public library, and the proof candidate retains it with the mutation fixture and report.

@@ -27,6 +27,26 @@
         "declaration": "TheoremLibrary.Geometry.Sphere.hasFDerivAt_normalization_of_ne_zero"
       }
     ],
+    "supportingDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Anisotropy",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Anisotropy.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.fderiv_normalization_radial_line",
+        "applicability": "At nonzero x every scalar multiple of x lies in the derivative kernel."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Anisotropy",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Anisotropy.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.norm_fderiv_normalization_tangent",
+        "applicability": "At nonzero x the norm of the derivative on an orthogonal v is ‖v‖ / ‖x‖."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Anisotropy",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Anisotropy.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_derivative_no_common_gain",
+        "applicability": "A nonzero state and a nonzero orthogonal witness rule out a single norm gain for both radial and tangent directions."
+      }
+    ],
     "aliases": {
       "LIB-SPH-002": [
         "TheoremLibrary.Geometry.Sphere.fderiv_normalization_eq_scaled_tangent_projector",

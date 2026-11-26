@@ -22,6 +22,14 @@
         "declaration": "TheoremLibrary.Geometry.Sphere.normalization_native_derivative_eq_scaled_tangent_projector"
       }
     ],
+    "supportingDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Normalization",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Normalization.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.hasFDerivAt_inv_norm_of_ne_zero",
+        "applicability": "Away from zero the reciprocal-norm derivative composes the norm derivative with scalar inversion at the norm."
+      }
+    ],
     "aliases": {}
   },
   "proofSource": {

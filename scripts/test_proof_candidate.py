@@ -59,6 +59,7 @@ class ProofCandidateTest(unittest.TestCase):
             self.assertIn("source/Mutate.lean", receipt["files_sha256"])
             self.assertIn("source/reports/mutation-upstream-fixture.json", receipt["files_sha256"])
             self.assertIn("source/scripts/fixtures/ApplicabilityBoundary.lean", receipt["files_sha256"])
+            self.assertIn("source/scripts/fixtures/PublicTheoremInventory.lean", receipt["files_sha256"])
             self.assertNotIn("lib/lean/Unrelated.olean", archive.getnames())
             self.assertEqual(set(archive.getnames()), {"proof-receipt.json", *receipt["files_sha256"]})
             for name, digest in receipt["files_sha256"].items():

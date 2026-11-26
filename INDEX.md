@@ -4,6 +4,8 @@ This index is the human-readable entry point to the public Lean library. It desc
 
 Each applicability record pins the Lean sources and states the conditions and scope of the indexed result. Its study handoff records applicability as unmeasured in the theorem library. Where a relevant public Research Notes checkpoint exists, the record links it. A `null` checkpoint marks a result with no specific public handoff.
 
+The `supportingDeclarations` in each record give the scope of related public lemmas within the same result family. The formal check compares the indexed and supporting declarations with Lean's compiled theorem inventory and verifies each defining module.
+
 ## Foundations of normalization
 
 ### FRM-000001 — derivative of exact normalization away from zero

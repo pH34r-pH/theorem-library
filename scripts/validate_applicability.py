@@ -23,6 +23,20 @@ def require(predicate, message):
         raise ValueError(message)
 
 
+def proof_declarations(record):
+    public = record["publicReference"]
+    supporting = public.get("supportingDeclarations", [])
+    require(isinstance(supporting, list), "supporting declarations must be a list")
+    for item in supporting:
+        require(isinstance(item, dict) and set(item) == {"module", "sourcePath", "declaration", "applicability"}
+                and isinstance(item["applicability"], str) and item["applicability"].strip(),
+                "supporting declaration requires a source, name and applicability statement")
+    declarations = [record["proof"], *public["relatedDeclarations"], *supporting]
+    require(len({item["declaration"] for item in declarations}) == len(declarations),
+            f"duplicate declaration for {record['id']}")
+    return declarations
+
+
 def _git_blob(root, commit, path):
     try:
         return subprocess.check_output(
@@ -140,6 +154,8 @@ def validate(root, record):
     require(type(record["schemaVersion"]) is int and record["schemaVersion"] == 1
             and record["id"] == "FRM-000133", "unsupported applicability record")
     _validate_scope(record["formalScope"], record["studyHandoff"])
+    require({item["sourcePath"] for item in proof_declarations(record)} == {MODULE},
+            "FRM-000133 declarations must resolve to its pinned proof module")
     _validate_proof(root, record["proof"])
     return _validate_example(record["syntheticExample"])
 
@@ -158,7 +174,7 @@ def validate_indexed_scope(root, record):
         isinstance(value, str) and value.strip() for value in premises
     ), f"{identifier} requires explicit proof premises")
     binding = record["publicReference"]
-    paths = {declaration["sourcePath"] for declaration in [record["proof"], *binding["relatedDeclarations"]]}
+    paths = {declaration["sourcePath"] for declaration in proof_declarations(record)}
     proof = record["proofSource"]
     require(set(proof["sha256"]) == paths, f"missing or extra proof source pin for {identifier}")
     for path, digest in proof["sha256"].items():

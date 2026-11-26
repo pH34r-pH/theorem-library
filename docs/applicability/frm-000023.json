@@ -27,6 +27,44 @@
         "declaration": "TheoremLibrary.Geometry.Sphere.downstream_radial_annihilation"
       }
     ],
+    "supportingDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalizeState_positive_scale",
+        "applicability": "Exact normalization is invariant under positive scalar multiplication, including at zero with the Lean definition."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalizeState_norm",
+        "applicability": "Exact normalization has unit norm for nonzero input."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.radius_times_normalize",
+        "applicability": "Multiplying the normalized direction by the original radius recovers a nonzero state."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalizeFactor_unique_on_sphere",
+        "applicability": "Two factors agreeing with the same observation on all normalized nonzero inputs agree at every unit direction."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalized_proposal_rescaling",
+        "applicability": "A pointwise positive multiplier on a proposal map leaves its exact normalized transition unchanged."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.RadialMemory",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/RadialMemory.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalized_proposal_iterates",
+        "applicability": "For a pointwise positive proposal multiplier, the two exact normalized transitions agree at every natural-number iterate from the same starting state."
+      }
+    ],
     "aliases": {
       "LIB-SPH-001": [
         "TheoremLibrary.Geometry.Sphere.normalizeState_eq_iff_positive_scale",

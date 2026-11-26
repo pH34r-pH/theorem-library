@@ -18,6 +18,7 @@ FIXED_INPUTS = (
     "LICENSE", "NOTICE", "INDEX.md", "PUBLIC_CORE.md", "TheoremLibrary.lean",
     "lean-toolchain", "lakefile.lean", "lake-manifest.json",
     "Mutate.lean", "reports/mutation-upstream-fixture.json", "scripts/fixtures/ApplicabilityBoundary.lean",
+    "scripts/fixtures/PublicTheoremInventory.lean",
 )
 PROOF_SCOPE = (
     *FIXED_INPUTS, "TheoremLibrary/", "docs/applicability/", "scripts/", ".github/workflows/lean.yml",
