@@ -35,5 +35,33 @@
         "TheoremLibrary.Geometry.Sphere.normalized_loss_gradient_orthogonal"
       ]
     }
+  },
+  "proofSource": {
+    "commit": "950b48d502015daa1c648b5ce7a3b72eee367995",
+    "sha256": {
+      "TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean": "f673700672d776c7feb86876869dc036d596b9a4b6f7e22194034a4c4de27b40",
+      "TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean": "f94baa0369049e59e857a230155e37e8afbe0a37fe0c284ee65cb75db635cbe1"
+    }
+  },
+  "formalScope": {
+    "map": "A scalar loss composed with N(x) = (1 / ‖x‖) • x, and normalized tangent steps.",
+    "domain": "real inner-product space; the gradient formulation also assumes completeness",
+    "premises": [
+      "The starting state x is nonzero.",
+      "The radial-flatness result assumes the loss is differentiable at N(x); the gradient formulation assumes the stated gradient there.",
+      "The tangent update is orthogonal to x. Inverse-square velocity requires an extra inverse-radius factor in the ambient step."
+    ],
+    "extent": "First-order sensitivity and step derivative at the specified point, with step derivative evaluated at zero step size.",
+    "claim": "Exact normalization removes first-order radial loss sensitivity. The stated tangent step has inverse-radius angular velocity, or inverse-square velocity under the explicitly radius-scaled update.",
+    "studyBoundary": "A finite optimizer step, empirical direction distribution, or different update scale requires separate evidence."
+  },
+  "studyHandoff": {
+    "checkpoint": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-003--frm-000021--scale-invariant-loss-geometry",
+    "applicability": "unmeasured",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "population": null
   }
 }

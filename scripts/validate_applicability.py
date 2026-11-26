@@ -15,6 +15,7 @@ MODULE = "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean"
 NAMESPACE = "TheoremLibrary.Geometry.Sphere"
 THEOREM = "normalization_singularValues"
 _SHA1 = re.compile(r"[0-9a-f]{40}")
+_LEAN_PATH = re.compile(r"TheoremLibrary(?:/[A-Za-z_][A-Za-z0-9_]*)+[.]lean")
 
 
 def require(predicate, message):
@@ -32,16 +33,22 @@ def _git_blob(root, commit, path):
         raise ValueError(f"proof-source pin does not resolve {path}") from exc
 
 
+def _pinned_source(root, commit, path, digest):
+    require(_SHA1.fullmatch(commit), "the proof source requires an exact Git commit")
+    require(_LEAN_PATH.fullmatch(path), "proof source must name a public Lean module")
+    source = _git_blob(root, commit, path)
+    require(hashlib.sha256(source).hexdigest() == digest, f"proof source digest mismatch for {path}")
+    require((root / path).read_bytes().replace(b"\r\n", b"\n") == source,
+            f"the checked proof source differs from the pinned source for {path}")
+    return source
+
+
 def _validate_proof(root, proof):
     require(proof["declaration"] == f"{NAMESPACE}.{THEOREM}", "unresolved proof declaration")
     require(proof["sourcePath"] == MODULE and proof["module"] == f"{NAMESPACE}.NormalizationSpectrum",
             "unresolved proof module")
     commit = proof["sourceCommit"]
-    require(_SHA1.fullmatch(commit), "the proof source requires an exact Git commit")
-    source = _git_blob(root, commit, MODULE)
-    require(hashlib.sha256(source).hexdigest() == proof["sourceSha256"], "proof source digest mismatch")
-    require((root / MODULE).read_bytes().replace(b"\r\n", b"\n") == source,
-            "the checked proof source differs from the pinned source")
+    source = _pinned_source(root, commit, MODULE, proof["sourceSha256"])
     lean = _git_blob(root, commit, "lean-toolchain").decode().strip()
     require(lean == proof["leanToolchain"] == (root / "lean-toolchain").read_text().strip(),
             "Lean toolchain differs from the pinned proof environment")
@@ -137,9 +144,39 @@ def validate(root, record):
     return _validate_example(record["syntheticExample"])
 
 
+def validate_indexed_scope(root, record):
+    identifier = record["id"]
+    require(type(record["schemaVersion"]) is int and record["schemaVersion"] == 1,
+            f"unsupported applicability record for {identifier}")
+    scope = record["formalScope"]
+    required = {"map", "domain", "extent", "claim", "studyBoundary"}
+    require(set(scope) == required | {"premises"} and all(
+        isinstance(scope[key], str) and scope[key].strip() for key in required
+    ), f"{identifier} requires an exact map, domain, proved claim and study boundary")
+    premises = scope["premises"]
+    require(isinstance(premises, list) and premises and all(
+        isinstance(value, str) and value.strip() for value in premises
+    ), f"{identifier} requires explicit proof premises")
+    binding = record["publicReference"]
+    paths = {declaration["sourcePath"] for declaration in [record["proof"], *binding["relatedDeclarations"]]}
+    proof = record["proofSource"]
+    require(set(proof["sha256"]) == paths, f"missing or extra proof source pin for {identifier}")
+    for path, digest in proof["sha256"].items():
+        _pinned_source(root, proof["commit"], path, digest)
+    handoff = record["studyHandoff"]
+    unavailable = {"operatorRevision", "numericType", "epsilonPolicy", "maskPolicy", "population"}
+    require(set(handoff) == unavailable | {"checkpoint", "applicability"}
+            and handoff["applicability"] == "unmeasured" and all(handoff[key] is None for key in unavailable),
+            f"{identifier} study applicability remains unmeasured in the public proof record")
+    require(handoff["checkpoint"] == binding["researchNotes"], f"{identifier} study checkpoint differs from index")
+
+
 if __name__ == "__main__":
     try:
         gains = validate(ROOT, json.loads((ROOT / RECORD).read_text(encoding="utf-8")))
+        for record_path in sorted((ROOT / RECORD.parent).glob("*.json")):
+            if record_path.name != RECORD.name:
+                validate_indexed_scope(ROOT, json.loads(record_path.read_text(encoding="utf-8")))
     except (KeyError, OSError, TypeError, ValueError) as exc:
-        sys.exit(f"FRM-000133 applicability check failed: {exc}")
+        sys.exit(f"Public applicability check failed: {exc}")
     print(f"FRM-000133 synthetic tangential gains: {gains}. Study applicability: unmeasured.")

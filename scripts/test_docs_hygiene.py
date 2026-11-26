@@ -8,7 +8,7 @@ from pathlib import Path
 from copy import deepcopy
 
 from docs_hygiene import changed_files, check_paths
-from validate_applicability import RECORD, ROOT, validate
+from validate_applicability import RECORD, ROOT, validate, validate_indexed_scope
 from validate_public_references import _load_records, validate as validate_public_references
 
 
@@ -99,6 +99,22 @@ class PublicReferenceTests(unittest.TestCase):
         declarations = validate_public_references(ROOT, self.records, self.original.values())
         self.assertIn("TheoremLibrary.Geometry.Sphere.erased_radius_future", declarations)
         self.assertIn("TheoremLibrary.Geometry.Sphere.normalization_singularValues", declarations)
+
+    def test_extended_applicability_pins_and_handoff(self):
+        for path, record in self.records.items():
+            if Path(path) != RECORD:
+                with self.subTest(path=path):
+                    validate_indexed_scope(ROOT, record)
+
+    def test_extended_applicability_rejects_missing_premise_or_source_pin(self):
+        record = self.records["docs/applicability/frm-000023.json"]
+        record["formalScope"]["premises"] = []
+        with self.assertRaisesRegex(ValueError, "explicit proof premises"):
+            validate_indexed_scope(ROOT, record)
+        record = self.original["docs/applicability/frm-000023.json"]
+        record["proofSource"]["sha256"].clear()
+        with self.assertRaisesRegex(ValueError, "missing or extra proof source pin"):
+            validate_indexed_scope(ROOT, record)
 
     def test_missing_source_and_duplicate_stable_identifier(self):
         path = "docs/applicability/frm-000133.json"
