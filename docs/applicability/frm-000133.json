@@ -79,6 +79,50 @@
         "declaration": "TheoremLibrary.Geometry.Sphere.normalization_derivative_rank"
       }
     ],
+    "supportingDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.scaledTangentMap_apply",
+        "applicability": "For any real c and vectors u and v the defining expression is c • (v − ⟨u, v⟩u)."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.scaledTangentMap_orthogonal",
+        "applicability": "The scaled map has output orthogonal to u when u has unit norm."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.scaledTangentMap_tangent",
+        "applicability": "On a vector orthogonal to u, the scaled map acts by multiplication by c."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.scaledTangentMap_symmetric",
+        "applicability": "The scaled map is symmetric for any real c and vector u."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.scaledTangentMap_ker",
+        "applicability": "For nonzero c and unit u its kernel is the line through u."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.scaledTangentMap_rank",
+        "applicability": "In finite dimension with nonzero c and unit u its rank is one less than the ambient dimension."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.scaledTangentMap_singularValues",
+        "applicability": "In finite dimension with positive c and unit u its singular values are c on the tangent ranks and zero thereafter."
+      }
+    ],
     "aliases": {}
   }
 }

@@ -96,9 +96,23 @@ class PublicReferenceTests(unittest.TestCase):
         self.original = deepcopy(self.records)
 
     def test_real_inventory_resolves_offline(self):
-        declarations = validate_public_references(ROOT, self.records, self.original.values())
+        declarations, modules = validate_public_references(ROOT, self.records, self.original.values())
         self.assertIn("TheoremLibrary.Geometry.Sphere.erased_radius_future", declarations)
         self.assertIn("TheoremLibrary.Geometry.Sphere.normalization_singularValues", declarations)
+        module = "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum"
+        self.assertIn(module, modules)
+        self.assertEqual(declarations["TheoremLibrary.Geometry.Sphere.scaledTangentMap_rank"], module)
+
+    def test_supporting_declarations_require_scope_and_share_the_source_pin(self):
+        record = self.records["docs/applicability/frm-000003.json"]
+        support = record["publicReference"]["supportingDeclarations"][0]
+        scope = support.pop("applicability")
+        with self.assertRaisesRegex(ValueError, "supporting declaration requires.*applicability"):
+            validate_public_references(ROOT, self.records)
+        support["applicability"] = scope
+        support["sourcePath"] = "TheoremLibrary/Geometry/Sphere/Projection.lean"
+        with self.assertRaisesRegex(ValueError, "missing or extra proof source pin"):
+            validate_indexed_scope(ROOT, record)
 
     def test_foundational_records_are_present(self):
         foundational_ids = {f"FRM-{number:06d}" for number in range(1, 8)}
@@ -176,11 +190,12 @@ class PublicReferenceTests(unittest.TestCase):
                 file.write_text(file.read_text(encoding="utf-8").replace("RadialMemory", "ScaleQuotient"),
                                 encoding="utf-8")
             record = self.records["docs/applicability/frm-000023.json"]
-            for reference in [record["proof"], *record["publicReference"]["relatedDeclarations"]]:
+            public = record["publicReference"]
+            for reference in [record["proof"], *public["relatedDeclarations"], *public["supportingDeclarations"]]:
                 reference["module"] = reference["module"].replace("RadialMemory", "ScaleQuotient")
                 reference["sourcePath"] = renamed.as_posix()
             with (root / renamed).open("a", encoding="utf-8") as source:
-                source.write("\ntheorem privateFixtureHelper : True := True.intro\n")
+                source.write("\nprivate theorem privateFixtureHelper : True := True.intro\n")
             validate_public_references(root, self.records, self.original.values())
 
 

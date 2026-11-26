@@ -11,6 +11,14 @@
     "publicImport": true,
     "researchNotes": null,
     "relatedDeclarations": [],
+    "supportingDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormDerivative",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormDerivative.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.hasFDerivAt_norm_of_ne_zero",
+        "applicability": "At nonzero x the derivative of the norm sends v to ⟨x, v⟩ / ‖x‖. The unit case drops the divisor."
+      }
+    ],
     "aliases": {}
   },
   "proofSource": {

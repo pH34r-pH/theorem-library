@@ -11,6 +11,14 @@
     "publicImport": true,
     "researchNotes": "https://github.com/pH34r-pH/research-notes/blob/main/reference/formal-methods/checkpoints.md#lib-sph-002--frm-000020--normalization-derivative-anisotropy",
     "relatedDeclarations": [],
+    "supportingDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.Normalization",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/Normalization.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_derivative_apply_tangent",
+        "applicability": "For ⟨x, v⟩ = 0 the displayed scaled linear map sends v to (1 / ‖x‖) • v. Its identification with the derivative additionally requires x ≠ 0."
+      }
+    ],
     "aliases": {}
   },
   "proofSource": {

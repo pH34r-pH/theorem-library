@@ -18,13 +18,14 @@ check_public_reference_resolution() (
     run_formal_stage 'Public reference inventory' python scripts/validate_public_references.py --base "${THEOREM_REFERENCE_BASE:-}" \
       --lean-output "$temp/PublicReferences.lean"
     run_formal_stage 'Public reference elaboration' lake env lean --root="$temp" "$temp/PublicReferences.lean"
-    printf '%s\n' 'import TheoremLibrary' \
-      '#check TheoremLibrary.Geometry.Sphere.missingPublicReferenceForValidation' > "$temp/MissingReference.lean"
+    grep -vF 'TheoremLibrary.Geometry.Sphere.tangentProject_radial' "$temp/PublicReferences.lean" > "$temp/MissingReference.lean"
+    printf '%s\n' '#check TheoremLibrary.Geometry.Sphere.missingPublicReferenceForValidation' >> "$temp/MissingReference.lean"
     if lake env lean --root="$temp" "$temp/MissingReference.lean" > "$temp/negative.log" 2>&1; then
         echo 'Public reference check accepted a missing Lean declaration.' >&2
         exit 1
     fi
-    if ! grep -E 'Unknown (identifier|constant).*missingPublicReferenceForValidation' "$temp/negative.log"; then
+    if ! grep -F 'Public theorem has no applicability record: TheoremLibrary.Geometry.Sphere.tangentProject_radial' "$temp/negative.log" ||
+       ! grep -E 'Unknown (identifier|constant).*missingPublicReferenceForValidation' "$temp/negative.log"; then
         cat "$temp/negative.log" >&2
         echo 'Missing public declaration fixture failed for an unexpected reason.' >&2
         exit 1

@@ -32,6 +32,7 @@ case "$*" in
   'env lean --root='*PublicReferences.lean) record public-lean ;;
   'env lean --root='*MissingReference.lean)
     record negative-lean
+    printf 'Public theorem has no applicability record: TheoremLibrary.Geometry.Sphere.tangentProject_radial\n'
     printf 'Unknown identifier TheoremLibrary.Geometry.Sphere.missingPublicReferenceForValidation\n'
     exit 1 ;;
   'env leanchecker TheoremLibrary') record leanchecker ;;
@@ -45,7 +46,9 @@ esac
 PYTHON = """
 case "$1" in
   scripts/validate_applicability.py) record applicability ;;
-  scripts/validate_public_references.py) record public-reference ;;
+  scripts/validate_public_references.py)
+    record public-reference
+    printf '%s\n' 'import TheoremLibrary' 'TheoremLibrary.Geometry.Sphere.tangentProject_radial' > "$5" ;;
   scripts/validate_mutation_fixture_report.py) record mutation-report ;;
   *) printf 'Unexpected fixture Python command %s\n' "$*" >&2; exit 90 ;;
 esac

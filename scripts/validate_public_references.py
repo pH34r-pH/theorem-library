@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from validate_applicability import ROOT, require
+from validate_applicability import ROOT, proof_declarations, require
 
 
 RECORDS = "docs/applicability"
@@ -97,7 +97,8 @@ def _check_card(root, path, record, cards, exported):
     label = public["indexLabel"]
     require(public["publicImport"] is True and label in cards, f"missing public index entry {label}")
     card = cards.pop(label)
-    sources = {_check_source(root, item, exported) for item in [record["proof"], *public["relatedDeclarations"]]}
+    declarations = proof_declarations(record)
+    sources = {_check_source(root, item, exported) for item in declarations}
     links = set(re.findall(r"\]\((TheoremLibrary/[^ )]+\.lean)\)", card))
     require(sources == links and f"]({path})" in card, f"source or applicability links differ for {label}")
     notes = public["researchNotes"]
@@ -107,14 +108,18 @@ def _check_card(root, path, record, cards, exported):
         require(isinstance(notes, str) and notes.startswith(RESEARCH_NOTES)
                 and re.fullmatch("[a-z0-9-]+", notes.removeprefix(RESEARCH_NOTES))
                 and f"]({notes})" in card, f"Research Notes destination differs for {label}")
+    return declarations
 
 
 def validate(root, records, previous=()):
     cards, exported = _index_cards(root), _public_modules(root)
     bindings = {}
+    inventory = {}
     for path, record in records.items():
         _add_bindings(bindings, _declared_ids(record))
-        _check_card(root, path, record, cards, exported)
+        for item in _check_card(root, path, record, cards, exported):
+            name, module = item["declaration"], item["module"]
+            require(inventory.setdefault(name, module) == module, f"conflicting source module for {name}")
     require(not cards, "missing applicability records for indexed results")
     old_bindings = {}
     for record in previous:
@@ -123,7 +128,15 @@ def validate(root, records, previous=()):
         current = bindings.get(identifier, set())
         preserved = declarations == current if identifier.startswith("LIB-") else declarations <= current
         require(preserved, f"stable reference was silently removed or repointed: {identifier}")
-    return sorted(set().union(*bindings.values()))
+    return inventory, exported
+
+
+def render_lean(root, inventory, modules):
+    check = _read(root, "scripts/fixtures/PublicTheoremInventory.lean").rstrip()
+    vocabulary = ",\n  ".join(json.dumps(module) for module in sorted(modules))
+    declarations = ",\n  ".join(f"({json.dumps(name)}, {json.dumps(module)})"
+                              for name, module in sorted(inventory.items()))
+    return f"{check}\n\nrun_cmd checkPublicTheorems #[\n  {vocabulary}\n] #[\n  {declarations}\n]\n"
 
 
 def _previous_records(root, base):
@@ -141,13 +154,13 @@ def main():
     parser.add_argument("--lean-output", type=Path)
     args = parser.parse_args()
     try:
-        names = validate(ROOT, _load_records(ROOT), _previous_records(ROOT, args.base))
+        inventory, modules = validate(ROOT, _load_records(ROOT), _previous_records(ROOT, args.base))
         if args.lean_output is not None:
             with args.lean_output.open("x", encoding="utf-8") as output:
-                output.write("import TheoremLibrary\n\n" + "".join(f"#check {name}\n" for name in names))
+                output.write(render_lean(ROOT, inventory, modules))
     except (KeyError, OSError, TypeError, ValueError, subprocess.CalledProcessError) as exc:
         sys.exit(f"Public reference check failed: {exc}")
-    print(f"Public reference inventory passed for {len(names)} distinct Lean declarations.")
+    print(f"Public reference records validated for {len(inventory)} distinct Lean declarations.")
 
 
 if __name__ == "__main__":

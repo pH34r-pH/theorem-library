@@ -32,6 +32,74 @@
         "declaration": "TheoremLibrary.Geometry.Sphere.normalized_gradient_step_velocity"
       }
     ],
+    "supportingDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.post_normalization_zero_iff",
+        "applicability": "At a nonzero producer output y the composed derivative kills v exactly when Jv is in the radial line through y."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.pre_normalization_arbitrary_tangent_gain",
+        "applicability": "At a unit state and orthogonal perturbation there is a linear consumer realizing any specified real tangent multiplier."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalization_sandwich_kills_radial",
+        "applicability": "With a nonzero initial state, the initial normalization derivative kills radial multiples before the subsequent linear and normalization maps act."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.post_normalization_tangent_image",
+        "applicability": "At nonzero y with Jv orthogonal to y, post-normalization sends Jv to its inverse-radius-scaled value."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.post_normalization_radial_survival",
+        "applicability": "For unit input u and a nonzero tangent witness at nonzero y, there exists a linear producer sending u to that witness so it survives post-normalization."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.fderiv_post_normalized",
+        "applicability": "A differentiable producer with nonzero output admits the chain rule for exact post-normalization."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.fderiv_post_normalized_zero_iff",
+        "applicability": "For a differentiable producer with nonzero output, the actual derivative kills v exactly when the producer derivative sends v into the output radial line."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.fderiv_pre_normalized_radial",
+        "applicability": "For a nonzero state and a consumer differentiable at its normalized direction, the derivative of the composed map kills every radial multiple."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationComposition",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationComposition.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.affine_producer_radial_survival",
+        "applicability": "For unit input u and a nonzero orthogonal witness at nonzero y, an affine producer with output y at u realizes survival of the radial derivative."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationGradient",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.gradient_normalized_loss",
+        "applicability": "In a complete real inner-product space, at nonzero x with a loss differentiable at N(x), the composed gradient is the inverse-radius-scaled tangent projection of the loss gradient."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.NormalizationGradient",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationGradient.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.normalized_gradient_step_norm_sq",
+        "applicability": "For a differentiable loss at N(x) with x nonzero, the squared norm of the unnormalized step is ‖x‖² plus the squared learning rate times the squared norm of the composed gradient."
+      }
+    ],
     "aliases": {}
   },
   "proofSource": {

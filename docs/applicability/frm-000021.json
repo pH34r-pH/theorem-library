@@ -27,6 +27,32 @@
         "declaration": "TheoremLibrary.Geometry.Sphere.normalized_loss_gradient_orthogonal"
       }
     ],
+    "supportingDeclarations": [
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.scale_invariant_gradient_radial",
+        "applicability": "At nonzero x with a loss differentiable at N(x), a vector representing the composed derivative on all directions is orthogonal to x."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.tangent_step_norm_sq",
+        "applicability": "For ⟨x, g⟩ = 0, the squared length of x − ηg equals ‖x‖² + η²‖g‖² for any real η."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.hasDerivAt_normalized_step",
+        "applicability": "At nonzero x, the derivative at zero step size of N(x − ηg) is −DN(x)g for arbitrary g."
+      },
+      {
+        "module": "TheoremLibrary.Geometry.Sphere.ScaleInvariantLoss",
+        "sourcePath": "TheoremLibrary/Geometry/Sphere/ScaleInvariantLoss.lean",
+        "declaration": "TheoremLibrary.Geometry.Sphere.hasDerivAt_normalized_scaled_tangent_step",
+        "applicability": "At nonzero x with an orthogonal ambient direction, scaling the step by inverse radius yields inverse-square tangent velocity at zero step size."
+      }
+    ],
     "aliases": {
       "LIB-SPH-003": [
         "TheoremLibrary.Geometry.Sphere.scale_invariant_radial_flatness",
