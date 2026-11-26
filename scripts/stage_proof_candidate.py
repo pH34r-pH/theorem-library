@@ -17,10 +17,10 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXED_INPUTS = (
     "LICENSE", "NOTICE", "INDEX.md", "PUBLIC_CORE.md", "TheoremLibrary.lean",
     "lean-toolchain", "lakefile.lean", "lake-manifest.json",
+    "Mutate.lean", "reports/mutation-upstream-fixture.json", "scripts/fixtures/ApplicabilityBoundary.lean",
 )
 PROOF_SCOPE = (
-    *FIXED_INPUTS, "TheoremLibrary/", "docs/applicability/", "Mutate.lean",
-    "reports/mutation-upstream-fixture.json", "scripts/", ".github/workflows/lean.yml",
+    *FIXED_INPUTS, "TheoremLibrary/", "docs/applicability/", "scripts/", ".github/workflows/lean.yml",
 )
 
 
