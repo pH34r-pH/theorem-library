@@ -32,7 +32,9 @@ This result is deliberately narrower than saying that a recurrent model cannot p
 
 ### FRM-000133 — normalization spectrum
 
-In finite-dimensional real inner-product spaces, the derivative of normalization has one radial zero mode and equal inverse-radius gain on tangent modes. The library characterizes its kernel, range, rank, and singular values exactly.
+In a finite-dimensional real inner-product space, at `x ≠ 0`, the derivative of the exact map `x ↦ (1 / ‖x‖) • x` has a radial zero mode and inverse-radius gain on directions orthogonal to `x`. The result concerns one local derivative. The library characterizes its kernel, range, rank, and singular values exactly.
+
+The [applicability record](docs/applicability/frm-000133.json) pins the declaration and includes a reproducible binary64 example. At norm `ε/2` the exact map retains tangent gain, while an illustrative cutoff implementation stays constant. The example also checks a masked row. Empirical applicability stays unmeasured until the study records its operator revision, dtype, epsilon and mask policies, and the corresponding population counts.
 
 **Source:** [NormalizationSpectrum.lean](TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean)
 

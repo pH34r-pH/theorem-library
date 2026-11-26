@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "FRM-000133",
+  "proof": {
+    "module": "TheoremLibrary.Geometry.Sphere.NormalizationSpectrum",
+    "sourcePath": "TheoremLibrary/Geometry/Sphere/NormalizationSpectrum.lean",
+    "declaration": "TheoremLibrary.Geometry.Sphere.normalization_singularValues",
+    "sourceCommit": "950b48d502015daa1c648b5ce7a3b72eee367995",
+    "sourceSha256": "6adf0f298053891f491833e20925bf58ef66da376dec4bf70c60ac127507d026",
+    "leanToolchain": "leanprover/lean4:v4.34.0-rc2",
+    "mathlibCommit": "58e016c6f6c829b5f25b1a87a88f495f40e70aa7"
+  },
+  "formalScope": {
+    "map": "x ↦ (1 / ‖x‖) • x",
+    "domain": "finite-dimensional real inner-product space",
+    "premise": "x ≠ 0",
+    "tangentDirections": "v with inner product ⟨x, v⟩ = 0",
+    "claim": "inverse-radius tangent gain and radial kernel",
+    "extent": "single local derivative"
+  },
+  "syntheticExample": {
+    "numericType": "IEEE-754 binary64",
+    "epsilon": 0.125,
+    "step": 0.0000001,
+    "absoluteTolerance": 0.000000001,
+    "activeInput": [2.0, 0.0],
+    "smallInput": [0.0625, 0.0],
+    "unitTangent": [0.0, 1.0],
+    "cutoffPolicy": "use a constant unit direction when norm is below epsilon",
+    "maskPolicy": "exclude masked rows before normalization",
+    "expectedTangentialGain": {
+      "active": 0.5,
+      "smallExact": 16.0,
+      "smallCutoff": 0.0
+    }
+  },
+  "studyHandoff": {
+    "checkpoint": "https://github.com/pH34r-pH/research-notes/issues/31",
+    "operatorRevision": null,
+    "numericType": null,
+    "epsilonPolicy": null,
+    "maskPolicy": null,
+    "applicability": "unmeasured",
+    "population": null,
+    "denominators": {
+      "presented": "all rows before masking, including excluded rows",
+      "unmasked": "presented rows minus masked rows, the denominator for active and cutoff shares",
+      "active": "unmasked rows assigned to the exact normalization branch by the tested operator",
+      "cutoff": "unmasked rows assigned to the tested operator's cutoff branch"
+    }
+  }
+}
