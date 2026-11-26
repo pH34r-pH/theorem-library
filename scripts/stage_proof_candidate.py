@@ -18,6 +18,10 @@ FIXED_INPUTS = (
     "LICENSE", "NOTICE", "INDEX.md", "PUBLIC_CORE.md", "TheoremLibrary.lean",
     "lean-toolchain", "lakefile.lean", "lake-manifest.json",
 )
+PROOF_SCOPE = (
+    *FIXED_INPUTS, "TheoremLibrary/", "docs/applicability/", "Mutate.lean",
+    "reports/mutation-upstream-fixture.json", "scripts/", ".github/workflows/lean.yml",
+)
 
 
 def git(root: Path, *args: str) -> bytes:
@@ -47,8 +51,9 @@ def input_files(root: Path, sha: str) -> list[str]:
 def stage(root: Path, output: Path, sha: str, lean_version: str) -> None:
     if not re.fullmatch(r"[0-9a-f]{40}", sha) or git(root, "rev-parse", "HEAD").decode().strip() != sha:
         raise ValueError("proof candidate source must match the full checked-out revision")
-    if git(root, "status", "--porcelain", "--untracked-files=normal"):
-        raise ValueError("proof candidate requires a clean source checkout")
+    dirty = git(root, "status", "--porcelain", "--untracked-files=normal", "--", *PROOF_SCOPE)
+    if dirty:
+        raise ValueError(f"proof candidate requires clean proof source inputs:\n{dirty.decode().rstrip()}")
     filenames = input_files(root, sha)
     contents = {"source/" + name: git(root, "show", f"{sha}:{name}") for name in filenames}
     pin = contents["source/lean-toolchain"].decode().strip()

@@ -66,9 +66,16 @@ class ProofCandidateTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Lean version"):
             stage(self.root, output, self.sha, "Lean (version 4.35.0, fixture)")
         (self.root / "TheoremLibrary/Sample.lean").write_bytes(b"changed")
-        with self.assertRaisesRegex(ValueError, "clean source"):
+        with self.assertRaisesRegex(ValueError, "clean proof source"):
             stage(self.root, output, self.sha, self.lean)
         self.assertFalse(output.exists())
+
+    def test_unrelated_workflow_download_is_excluded(self):
+        (self.root / "runner-tool").write_bytes(b"installed CI utility")
+        output = self.directory / "output.tar.gz"
+        stage(self.root, output, self.sha, self.lean)
+        with tarfile.open(output) as archive:
+            self.assertFalse(any(name.endswith("runner-tool") for name in archive.getnames()))
 
     def test_missing_compiled_module_fails_before_creating_bundle(self):
         output = self.directory / "output.tar.gz"
