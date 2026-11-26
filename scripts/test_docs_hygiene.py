@@ -1,3 +1,4 @@
+import json
 import subprocess
 import sys
 import tempfile
@@ -5,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from docs_hygiene import changed_files, check_paths
+from validate_applicability import RECORD, ROOT, validate
 
 
 class DocumentationHygieneTests(unittest.TestCase):
@@ -53,6 +55,36 @@ class DocumentationHygieneTests(unittest.TestCase):
             self.assertIn("docs/issue-123.md", changed)
             self.assertIn("docs/issue-123.md", new_paths)
             self.assertTrue(check_paths(root, changed, new_paths))
+
+
+class ApplicabilityTests(unittest.TestCase):
+    def setUp(self):
+        self.record = json.loads((ROOT / RECORD).read_text(encoding="utf-8"))
+
+    def test_pinned_proof_and_synthetic_active_cutoff_and_masked_rows(self):
+        gains = validate(ROOT, self.record)
+        self.assertAlmostEqual(gains["active"], 0.5)
+        self.assertAlmostEqual(gains["smallExact"], 16.0)
+        self.assertEqual(gains["smallCutoff"], 0.0)
+
+    def test_scope_declares_the_nonzero_premise(self):
+        self.record["formalScope"].pop("premise")
+        with self.assertRaisesRegex(ValueError, "nonzero premise"):
+            validate(ROOT, self.record)
+
+    def test_proof_requires_resolvable_commit_and_declaration(self):
+        for field, value in (("declaration", "Unknown.theorem"), ("sourceCommit", "f" * 40)):
+            with self.subTest(field=field):
+                altered = dict(self.record, proof={**self.record["proof"], field: value})
+                with self.assertRaisesRegex(ValueError, "unresolved proof|proof-source pin does not resolve"):
+                    validate(ROOT, altered)
+
+    def test_unmeasured_study_has_no_invented_population(self):
+        for field, value in (("applicability", "measured"), ("population", {"active": 100})):
+            with self.subTest(field=field):
+                altered = dict(self.record, studyHandoff={**self.record["studyHandoff"], field: value})
+                with self.assertRaisesRegex(ValueError, "unmeasured applicability"):
+                    validate(ROOT, altered)
 
 
 if __name__ == "__main__":

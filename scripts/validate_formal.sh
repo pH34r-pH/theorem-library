@@ -4,6 +4,7 @@ set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 export LEAN_NUM_THREADS=1
 
+python scripts/validate_applicability.py
 lake build TheoremLibrary
 lake env leanchecker TheoremLibrary
 python scripts/validate_mutation_fixture_report.py
