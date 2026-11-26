@@ -20,6 +20,11 @@ on:
       - ".markdownlint-cli2.yaml"
       - ".github/workflows/lean.yml"
   workflow_dispatch:
+    inputs:
+      retain_proof_candidate:
+        description: Retain and attest a proof candidate built from main
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -31,12 +36,16 @@ concurrency:
 jobs:
   formal-proof:
     runs-on: ubuntu-latest
+    outputs:
+      proof_artifact: ${{ steps.proof_stage.outputs.name }}
     env:
       LEAN_NUM_THREADS: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
@@ -63,6 +72,7 @@ jobs:
         run: |
           python scripts/test_docs_hygiene.py
           python scripts/test_formal_scripts.py
+          python scripts/test_proof_candidate.py
       - name: Select changed living Markdown
         id: docs_files
         shell: bash
@@ -130,3 +140,41 @@ jobs:
         env:
           THEOREM_REFERENCE_BASE: ${{ steps.docs_base.outputs.sha }}
         run: bash scripts/validate_formal.sh
+
+      - name: Stage the checked proof candidate
+        id: proof_stage
+        if: >-
+          github.event_name == 'pull_request' ||
+          (github.event_name == 'workflow_dispatch' &&
+          github.ref == 'refs/heads/main' && inputs.retain_proof_candidate)
+        run: |
+          python scripts/stage_proof_candidate.py \
+            --source-sha "$GITHUB_SHA" \
+            --lean-version "$(lake env lean --version)" \
+            --output "$RUNNER_TEMP/theorem-proof.tar.gz"
+          printf 'name=theorem-proof-%s-%s\n' "$GITHUB_SHA" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+
+      - name: Retain proof candidate from an explicit main run
+        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.retain_proof_candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.proof_stage.outputs.name }}
+          path: ${{ runner.temp }}/theorem-proof.tar.gz
+          if-no-files-found: error
+
+  attest-proof:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.retain_proof_candidate
+    needs: formal-proof
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.formal-proof.outputs.proof_artifact }}
+      - name: Attest the exact checked proof bundle
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: theorem-proof.tar.gz
